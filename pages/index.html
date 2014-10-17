@@ -16,22 +16,13 @@
   		<a href='/{{ post.path }}'>{{ post.title }} <h2>{{ post.headline }}</h2></a>
   	</li>
   	{% endfor %}
-  </ul> <!--post-list-->
-  
-  <!--- Uncomment for link to archive.
-  {% if posts|length >= 4 %}
-  <footer id="post-list-footer">
-    <a id="archive-link" href="archive.html"> <span class="arrow">&larr;</span> Archive</a>
-  </footer>
-  {% endif %}
-  --->
+  </ul>
   
   {% block footer %}
   <footer id="footer">
     <p class="small">A short description.</p>
   </footer>
   {% endblock footer %}
-</section> <!--wrapper-->
 
-<a href="http://cactusformac.com/?utm_source=templates&utm_medium=badge&utm_campaign=blog-template"><img id="badge" class="2x" src="{% static '/images/badge.png' %}"/></a>
+</section>
 {% endblock content %}
