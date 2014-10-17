@@ -115,14 +115,6 @@ li	{ list-style-type:circle; list-style-position:inside; }
 b, strong { font-weight: bold; }
 em, i { font-style: italic; }
 
-#title {
-	display:inline-block;
-	line-height:100%;
-	font-weight:500;
-	font-size:19px;
-	margin:0;
-	padding-bottom:20px;
-}
 
 .description {
 	float:right;
@@ -134,7 +126,6 @@ h1 {
 	font-size:30px;
 	letter-spacing:-1px;
 	color:#222;
-	font-weight:bold;
 }
 
 h2 {

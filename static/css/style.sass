@@ -1,10 +1,28 @@
+@import 'bourbon/bourbon'
 @import 'default'
+
+*
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+
 
 $header_font: 'Quicksand', sans-serif
 
 #header
-  border-bottom: 1px solid #eee
   text-align: center
+
+  #title
+    display: inline-block
+    line-height: 100%
+    font-size: 19px
+    margin: 0
+
+    & > svg
+      +size(90px 90px)
 
   h1
     font-family: $header_font
+    font-weight: 400
+    margin-top: 13px
+    margin-bottom: 13px
+    letter-spacing: 4px
