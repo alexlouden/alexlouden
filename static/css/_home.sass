@@ -1,0 +1,55 @@
+%section
+
+  // 600px wide centered
+  .content
+    max-width: 600px
+    margin: 0 auto
+    padding: 100px 40px
+
+  h1
+    text-align: center
+    margin-bottom: 40px
+  
+.home
+  // every second section has grey background
+  section:nth-child(odd)
+    background-color: #eee
+
+
+.about
+  @extend %section
+
+.posts
+  @extend %section
+
+.projects
+  @extend %section
+
+.contact
+  @extend %section
+
+  text-align: center
+
+  .logo
+    +logo
+    margin-top: 30px
+    margin-bottom: 20px
+
+  h3
+    font-family: $header_font
+    font-size: 20px
+    margin-bottom: 50px
+
+
+  div:nth-child(2n)
+    // Add a gap every 2 links
+    margin-bottom: 30px
+
+  div // contact links
+    margin-bottom: 10px
+    font-family: $serif_font
+    font-variant: small-caps
+    color: $almost_black
+  
+  a
+    color: $almost_black

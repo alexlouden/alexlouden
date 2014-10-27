@@ -28,6 +28,22 @@ body
   -moz-osx-font-smoothing: grayscale
   text-rendering: optimizeLegibility
 
+h1
+  font-family: $header_font
+  font-weight: 400
+  font-size: 30px
+  letter-spacing: 4px
+  color: $almost_black
+
+h2
+  font-family: $serif_font
+  // font-variant: small-caps
+  color: $almost_black
+  line-height: 1.6
+
+h3
+  font-size: 20px
+
 
 ////////////////////////////////////////////
 //                Sections                //
@@ -35,6 +51,7 @@ body
 
 @import 'utils'
 @import 'nav'
+@import 'home'
 
 
 // +animation(bounce 0.5s ease-in infinite alternate)

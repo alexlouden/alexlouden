@@ -88,18 +88,9 @@ em, i { font-style: italic; }
 	color:#aaa;
 }
 
-h1 {
-	font-size:30px;
-	letter-spacing:-1px;
-	color:#222;
-}
-
-h2 {
+.post h2 {
 	font:italic 19px/1.3em Georgia,serif;
 	color:#bbb;
-}
-
-.post h2 {
 	margin-bottom:20px;
 	color:inherit;
 	font:400 18px/1.7em "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -120,7 +111,6 @@ h2 {
 
 h3, h4, h5 { color:#333; }
 
-h3 { font-size:20px; font-weight: 500; }
 h4 { font-size:16px;  font-weight:bold; }
 h5 { font-size:15px; font-weight: bold; }
 
@@ -208,7 +198,7 @@ img {
 Post List
 =========================================== */
 .post-list,#archive-list {
-	margin-top:100px;
+	margin-top:50px;
 }
 
 .post-list li,#archive-list li {

@@ -1,3 +1,10 @@
+@mixin logo($size: 60px)
+  display: inline-block
+  margin: 0
+
+  & > svg
+    +size($size $size)
+
 @mixin gradient_underline()
   @include linear-gradient(to top, black, white, $fallback: transparent)
   background-size: auto 1.2px
@@ -25,20 +32,7 @@ header
   margin-top: 30px
 
   .logo
-    display: inline-block
-    line-height: 100%
-    font-size: 19px
-    margin: 0
-
-    & > svg
-      +size(60px 60px)
-
-  h1
-    font-family: $header_font
-    font-weight: 400
-    margin-top: 13px
-    margin-bottom: 13px
-    letter-spacing: 4px
+    +logo
 
 nav
   font-size: 16px
