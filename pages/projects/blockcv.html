@@ -1,0 +1,14 @@
+title: BlockCV
+author: Alex Louden
+date: 11-10-2013
+headline: Filled with sample content. 
+
+{% extends "post.html" %}
+{% block body %}
+
+{% filter markdown %}
+### BlockCV
+Link: [test]()	
+{% endfilter %}
+
+{% endblock %}

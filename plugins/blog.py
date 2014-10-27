@@ -1,4 +1,3 @@
-import os
 import datetime
 import logging
 
@@ -6,62 +5,42 @@ from django.template import Context
 from django.template.loader import get_template
 from django.template.loader_tags import BlockNode, ExtendsNode
 
-Global = {"config": {}, "posts": []}
+Global = {"config": {}, "posts": [], "projects": []}
 
 Global["config"]["path"] = "posts"
 Global["config"]["date_format"] = "%d-%m-%Y"
 Global["config"]["post_body_block"] = "body"
+
+by_date = lambda x: x.get("date")
 
 
 def preBuild(site):
 
     global Global
 
-    # Check if the posts path exists
-    page_path = os.path.join(site.page_path, Global["config"]["path"])
-
-    if not os.path.isdir(page_path):
-        logging.warning("No posts folder found at: %s", page_path)
-
     for page in site.pages():
 
-        if page.path.startswith("%s/" % Global["config"]["path"]):
+        if page.path.startswith('posts/'):
 
+            # Skip non-html pages
             if not page.path.endswith('.html'):
                 continue
 
-            context = page.context()
-            context_post = {"path": page.path}
+            context = parse_page(page)
+            Global["posts"].append(context)
 
-            # Check if we have the required keys
-            for field in ["title", "headline", "date", "author"]:
+        if page.path.startswith('projects/'):
 
-                if not field in context:
-                    logging.warning(
-                        "Page %s is missing field: %s" % (page.path, field))
-                else:
+            # Skip non-html pages
+            if not page.path.endswith('.html'):
+                continue
 
-                    if field == "date":
-                        context_post[field] = _convertDate(
-                            context[field], page.path)
-                    else:
-                        context_post[field] = context[field]
-
-            # Temp post context
-            temp_post_context = Context(context)
-            temp_post_context.update(context_post)
-
-            # Add the post contents
-            context_post["body"] = _get_node(
-                get_template(page.path),
-                context=temp_post_context,
-                name=Global["config"]["post_body_block"])
-
-            Global["posts"].append(context_post)
+            context = parse_page(page)
+            Global["projects"].append(context)
 
     # Sort the posts by date and add the next and previous page indexes
-    Global["posts"] = sorted(Global["posts"], key=lambda x: x.get("date"))
-    Global["posts"].reverse()
+    Global["posts"] = sorted(Global["posts"], key=by_date, reverse=True)
+    Global["projects"] = sorted(Global["projects"], key=by_date, reverse=True)
 
     indexes = xrange(0, len(Global["posts"]))
 
@@ -72,11 +51,47 @@ def preBuild(site):
             Global["posts"][i]['nextPost'] = Global["posts"][i - 1]
 
 
+def parse_page(page):
+
+    context = page.context()
+    context_post = {"path": page.path}
+
+    # Check if we have the required keys
+    for field in ["title", "headline", "date", "author"]:
+
+        if not field in context:
+            logging.warning("Page %s is missing field: %s" % (page.path, field))
+        else:
+            if field == "date":
+                # Parse date from string to datetime
+                context_post[field] = _convertDate(context[field], page.path)
+            else:
+                context_post[field] = context[field]
+
+    # Temp post context
+    temp_post_context = Context(context)
+    temp_post_context.update(context_post)
+
+    # Add the post contents
+    context_post["body"] = _get_node(
+        get_template(page.path),
+        context=temp_post_context,
+        name=Global["config"]["post_body_block"]
+    )
+
+    return context_post
+
+
 def preBuildPage(site, page, context, data):
 
     context['posts'] = Global["posts"]
+    context['projects'] = Global["projects"]
 
     for post in Global["posts"]:
+        if post["path"] == page.path:
+            context.update(post)
+
+    for post in Global["projects"]:
         if post["path"] == page.path:
             context.update(post)
 
