@@ -1,7 +1,8 @@
-
-////////////////////////////////////////////
-//                 Header                 //
-////////////////////////////////////////////
+@mixin gradient_underline()
+  @include linear-gradient(to top, black, white, $fallback: transparent)
+  background-size: auto 1.2px
+  background-position: bottom center
+  background-repeat: repeat-x
 
 @mixin nav_underline($colour: black, $overlap: 3px)
   // Link underlines
@@ -14,6 +15,10 @@
     right: -$overlap + 3px
     height: 1px
     +transition(border-color 0.1s ease-in)
+
+////////////////////////////////////////////
+//                 Header                 //
+////////////////////////////////////////////
 
 header
   text-align: center
