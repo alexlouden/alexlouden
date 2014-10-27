@@ -1,0 +1,65 @@
+
+////////////////////////////////////////////
+//                 Header                 //
+////////////////////////////////////////////
+
+@mixin nav_underline($colour: black, $overlap: 3px)
+  // Link underlines
+  &:after
+    content: ""
+    position: absolute
+    border-bottom: 1px solid $colour
+    bottom: -3px // underneath
+    left: -$overlap
+    right: -$overlap + 3px
+    height: 1px
+    +transition(border-color 0.1s ease-in)
+
+header
+  text-align: center
+  margin-top: 30px
+
+  .logo
+    display: inline-block
+    line-height: 100%
+    font-size: 19px
+    margin: 0
+
+    & > svg
+      +size(60px 60px)
+
+  h1
+    font-family: $header_font
+    font-weight: 400
+    margin-top: 13px
+    margin-bottom: 13px
+    letter-spacing: 4px
+
+nav
+  font-size: 16px
+  font-family: $serif_font
+  margin-top: 30px
+
+  a
+    position: relative
+    color: $almost_black
+    font-variant: small-caps
+
+    margin-left: 15px
+    margin-right: 15px
+    letter-spacing: 1px
+
+    +nav_underline(white)
+
+    &:hover
+      &:after
+        $hover_gray: tint($almost_black, 70%)
+        border-color: $hover_gray
+
+    &.active
+      &:after
+        border-color: black
+
+    +mobile
+      margin-left: 10px
+      margin-right: 10px

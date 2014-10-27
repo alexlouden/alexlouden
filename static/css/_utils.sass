@@ -1,0 +1,22 @@
+
+////////////////////////////////////////////
+//                Responsive              //
+////////////////////////////////////////////
+
+// Widths
+$break-sm: 768px
+$break-md: 992px
+$break-l: 1024px
+$break-xl: 1200px
+
+@mixin mobile
+  @media only screen and (max-width: $break-sm - 1)
+    @content
+
+@mixin tablet
+  @media only screen and (max-width: $break-md - 1)
+    @content
+
+@mixin smalldesktop
+  @media only screen and (max-width: $break-l)
+    @content
