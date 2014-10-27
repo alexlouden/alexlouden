@@ -41,7 +41,7 @@ font-variant: normal; text-transform: none; line-height: 1em;
 /*=========================================
 General Spacing
 =========================================== */
-.post h1, h3, h4, h5, p, .post-body ul, #post-list li, pre {
+.post h1, h3, h4, h5, p, .post-body ul, .post-list li, pre {
 margin-bottom: 20px;
 }
 
@@ -66,7 +66,7 @@ a#documentation {
 	border-radius: 3px;
 }
 
-#wrapper {
+.wrapper {
 	padding:100px 40px 100px 40px;
 	max-width:600px; 
 	margin:0 auto;
@@ -85,8 +85,8 @@ Typography
 /*Accent color*/
 a, 
 #title,
-#post-list a:hover,
-#post-list li:hover .dates,
+.post-list a:hover,
+.post-list li:hover .dates,
 #title:hover {
 	text-decoration:none; 
 	color:#5badf0;
@@ -98,7 +98,7 @@ p a { color:#5694f1; }
 /*Transitions*/
 a,
 #post-nav a,
-#post-list a	{ 
+.post-list a	{ 
 	-webkit-transition: all 0.15s ease;
 	-moz-transition: all 0.15s ease;
 	-ms-transition: all 0.15s ease;
@@ -145,7 +145,7 @@ h2 {
 	margin:-5px 0 40px 0;
 }
 
-#post-list h2 {
+.post-list h2 {
 	font:normal 17px/1.5em "Helvetica Neue",Helvetica,Arial,sans-serif;
 	color:#aaa;
 	max-width:400px;
@@ -241,30 +241,30 @@ img {
 /*=========================================
 Post List
 =========================================== */
-#post-list,#archive-list {
+.post-list,#archive-list {
 	margin-top:100px;
 }
 
-#post-list li,#archive-list li {
+.post-list li,#archive-list li {
 	list-style-type:none;
 }
 
-#post-list li:last-child {
+.post-list li:last-child {
 	margin-bottom:0;
 }
 
-#post-list li+li {
+.post-list li+li {
 	padding-top:20px;
 	border-top:1px solid #eee;
 }
 
-#post-list a {
+.post-list a {
 	color:#333;
 	display:block;
 	font:bold 19px/1.7 "Helvetica Neue",helvetica,Arial,sans-serif;
 }
 
-#post-list .dates {
+.post-list .dates {
 	float:right;
 	position:relative;
 	top:1px;
@@ -272,7 +272,7 @@ Post List
 	color:#bbb;
 }
 
-#post-list-footer {
+.post-list-footer {
 	border-top:1px solid #eee;
 	margin-top:20px;
 	padding-top:100px;
@@ -448,18 +448,18 @@ h2.month {
 /*=====================*/
 
 @media screen and (max-width: 540px) {
-#wrapper { padding:20px 20px 20px 20px;}
+.wrapper { padding:20px 20px 20px 20px;}
 #header { margin-bottom: 60px; border-bottom: 1px solid #eee; }
 .post { margin: 40px 0; }
 #footer { margin-top: 60px; }
 
-#post-list, #archive-list { margin-top: 0; }
+.post-list, #archive-list { margin-top: 0; }
 #post-meta { margin-top: 60px; }
 
 #title { font-size: 17px; }
-#post-list .dates { display: none; }
+.post-list .dates { display: none; }
 
-#post-list-footer { margin-top: 20px; padding-top: 40px; }
+.post-list-footer { margin-top: 20px; padding-top: 40px; }
 
 h1 { font-size: 26px; }
 .post h2.headline { font-size: 20px; }

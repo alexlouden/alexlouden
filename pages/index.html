@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-<section id="wrapper">
   <header id="header">
     <a id="title" class="index">
       {% include 'logo.svg' %}
@@ -10,8 +9,9 @@
       Alex Louden
     </h1>
   </header>
+<section class="wrapper">
   
-  <ul id="post-list">
+  <ul class="post-list">
   	{% for post in posts %}
   	<li> 
   		<a href='/{{ post.path }}'><aside class="dates">{{ post.date|date:"M j" }}</aside></a>
