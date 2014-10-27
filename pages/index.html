@@ -1,14 +1,19 @@
 {% extends "base.html" %}
-{% block content %}
 
-  <header id="header">
-    <a id="title" class="index">
-      {% include 'logo.svg' %}
-    </a>
-    <h1>
-      Alex Louden
-    </h1>
-  </header>
+{% block header %}
+<header>
+  <a class="logo" href="/">
+    {% include 'logo.svg' %}
+  </a>
+  <nav>
+    <a href="/" class="active">about</a>
+    <a href="#">projects</a>
+    <a href="#">contact</a>
+  </nav>
+</header>
+{% endblock header %}
+
+{% block content %}
 <section class="wrapper">
   
   <ul class="post-list">
@@ -21,8 +26,8 @@
   </ul>
   
   {% block footer %}
-  <footer id="footer">
-    <p class="small">A short description.</p>
+  <footer>
+    <p>A short description.</p>
   </footer>
   {% endblock footer %}
 

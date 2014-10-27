@@ -9,17 +9,22 @@
 	<link rel="shortcut icon" href="{% static '/images/favicon.ico' %}">	
 	<link rel="stylesheet" href="{% static '/css/style.css' %}">
 	<link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Playfair+Display' rel='stylesheet' type='text/css'>
 	<link rel="alternate" type="application/rss+xml" title="My Blog Feed" href="/rss.xml">
 	
 </head>
 <body>
-  {% block content %}
-  Main content
-  {% endblock content %}
+	
+	{% block header %}
+	{% endblock header %}
 
-  {% block scripts %}
-  <script src="//code.jquery.com/jquery.min.js"></script>
-  <script src="{% static '/js/main.js' %}"></script>
-  {% endblock scripts %}
+	{% block content %}
+	Main content
+	{% endblock content %}
+
+	{% block scripts %}
+	<script src="//code.jquery.com/jquery.min.js"></script>
+	<script src="{% static '/js/main.js' %}"></script>
+	{% endblock scripts %}
 </body>
 </html>
