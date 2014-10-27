@@ -2,16 +2,36 @@
 @import "bourbon/bourbon"
 @import "default"
 
-*
-  -webkit-font-smoothing: antialiased
-  -moz-osx-font-smoothing: grayscale
+////////////////////////////////////////////
+//            Colours and Fonts           //
+////////////////////////////////////////////
 
+$body_grey: #666
+$almost_black: tint(black, 5%)
 
 $header_font: 'Quicksand', sans-serif
 $serif_font: 'Playfair Display', serif
+$body_font: "Helvetica Neue", Helvetica, Arial, sans-serif
 
-$almost_black: tint(black, 5%)
 
+////////////////////////////////////////////
+//                  Body                  //
+////////////////////////////////////////////
+
+html, body
+  height: 100%
+
+body
+  font: 16px/1 $body_font
+  color: $body_grey
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+  text-rendering: optimizeLegibility
+
+
+////////////////////////////////////////////
+//                Sections                //
+////////////////////////////////////////////
 
 @import 'utils'
 @import 'nav'
