@@ -40,16 +40,16 @@
     font-size: 20px
     margin-bottom: 50px
 
-
-  div:nth-child(2n)
-    // Add a gap every 2 links
-    margin-bottom: 30px
-
-  div // contact links
-    margin-bottom: 10px
+  .details
     font-family: $serif_font
     font-variant: small-caps
-    color: $almost_black
   
-  a
-    color: $almost_black
+    &, a
+      color: $almost_black
+
+    div
+      margin-bottom: 5px
+
+    div:nth-child(2n+1)
+      // Add a gap every 2 links
+      margin-bottom: 25px
