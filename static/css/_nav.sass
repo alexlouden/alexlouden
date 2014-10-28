@@ -11,7 +11,7 @@
   background-position: bottom center
   background-repeat: repeat-x
 
-@mixin nav_underline($colour: black, $overlap: 3px)
+@mixin nav_underline($colour: black, $overlap: 5px)
   // Link underlines
   &:after
     content: ""
@@ -19,7 +19,7 @@
     border-bottom: 1px solid $colour
     bottom: -3px // underneath
     left: -$overlap
-    right: -$overlap + 3px
+    right: -$overlap + 5px
     height: 1px
     +transition(border-color 0.1s ease-in)
 
@@ -36,6 +36,7 @@ header
 
 nav
   font-size: 16px
+  line-height: 2
   font-family: $serif_font
   margin-top: 30px
 
@@ -60,5 +61,5 @@ nav
         border-color: black
 
     +mobile
-      margin-left: 10px
-      margin-right: 10px
+      margin-left: 20px
+      margin-right: 20px

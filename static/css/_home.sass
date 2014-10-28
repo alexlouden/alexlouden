@@ -9,15 +9,22 @@
   h1
     text-align: center
     margin-bottom: 40px
-  
+ 
+  +mobile
+    .content
+      padding: 80px 40px
+
 .home
   // every second section has grey background
   section:nth-child(odd)
     background-color: #eee
 
-
 .about
   @extend %section
+
+  +mobile
+    .content
+      padding-top: 60px
 
 .posts
   @extend %section
