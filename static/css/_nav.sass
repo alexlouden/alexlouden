@@ -33,6 +33,26 @@ header
 
   .logo
     +logo
+    path
+      fill: white
+      stroke: black
+      stroke-width: 3px
+      stroke-linecap: butt
+      stroke-linejoin: miter
+      stroke-dasharray: 812px 812px
+      stroke-dashoffset: 0
+      +animation(wipein 1s ease-in)
+
++keyframes(wipein)
+  0%
+    stroke-dashoffset: 812px
+  50%
+    fill: white
+  70%
+    stroke-dashoffset: 0px
+  100%
+    fill: black
+
 
 nav
   font-size: 16px
@@ -70,3 +90,5 @@ nav
       margin-left: 20px
       margin-right: 20px
 
+
+// d3.select('#path4').node().getTotalLength()
