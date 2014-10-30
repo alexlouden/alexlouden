@@ -25,3 +25,50 @@ $break-xl: 1200px
 @mixin smalldesktop
   @media only screen and (max-width: $break-l)
     @content
+
+
+////////////////////////////////////////////
+//                 Loading                //
+////////////////////////////////////////////
+
+.fadein
+  +animation(fadein 1s ease-in)
+
++keyframes(fadein)
+  0%
+    opacity: 0
+  100%
+    opacity: 1
+
+.fadein1
+  +animation(fadein1 2s ease-in)
+
++keyframes(fadein1)
+  0%
+    opacity: 0
+  50%
+    opacity: 0
+  100%
+    opacity: 1
+  
+.fadein2
+  +animation(fadein2 3s ease-in)
+
++keyframes(fadein2)
+  0%
+    opacity: 0
+  66%
+    opacity: 0
+  100%
+    opacity: 1
+
+.fadein3
+  +animation(fadein3 4s ease-in)
+
++keyframes(fadein3)
+  0%
+    opacity: 0
+  75%
+    opacity: 0
+  100%
+    opacity: 1
