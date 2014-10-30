@@ -4,12 +4,17 @@
 ////////////////////////////////////////////
 
 // Widths
+$break-mob: 450px
 $break-sm: 768px
 $break-md: 992px
 $break-l: 1024px
 $break-xl: 1200px
 
 @mixin mobile
+  @media only screen and (max-width: $break-mob - 1)
+    @content
+
+@mixin bigmobile
   @media only screen and (max-width: $break-sm - 1)
     @content
 
