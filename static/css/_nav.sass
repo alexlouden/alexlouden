@@ -27,33 +27,34 @@
 //                 Header                 //
 ////////////////////////////////////////////
 
-body
-  padding-top: 184px
-
 header
   text-align: center
   padding-top: 30px
   padding-bottom: 30px
 
-  position: absolute
-  top: 0
-  width: 100%
   background-color: white
-
-  +transition(0.2s ease-in-out margin)
 
   .logo
     +logo
 
-  &.fixed
-    position: fixed
+body.home
+  // Only home has fixed nav
+  padding-top: 184px
 
-    // Hide logo upwards
-    +transform(translateY(-100px))
+  header
+    position: absolute
+    top: 0
+    width: 100%
 
-    border-bottom: 1px solid tint(white, 0.1)
-    padding-top: 15px
-    padding-bottom: 15px
+    &.fixed
+      position: fixed
+
+      // Hide logo upwards
+      +transform(translateY(-100px))
+
+      border-bottom: 1px solid tint(white, 0.1)
+      padding-top: 15px
+      padding-bottom: 15px
 
 nav
   font-size: 16px
