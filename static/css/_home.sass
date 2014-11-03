@@ -14,6 +14,37 @@
     .content
       padding: 80px 40px
 
+
+%post_list_styles
+  margin-top: 50px
+  
+  a
+    color: #333
+    display: block
+    font: bold 19px/1.7 $helvetica
+
+  h2
+    font: normal 17px/1.5em $helvetica
+    color: #aaa
+    max-width: 400px
+    margin-top: 2px
+
+  li
+    list-style-type: none
+    &:last-child
+      margin-bottom: 0
+
+  li+li
+    padding-top: 20px
+    border-top: 1px solid #eee
+
+  .dates
+    float: right
+    position: relative
+    top: 1px
+    font: 300 17px/1.8 "Helvetica Neue",helvetica,Arial,sans-serif
+      color: #bbb
+
 .home
   // every second section has grey background
   section:nth-child(odd)
@@ -46,12 +77,18 @@
 .posts
   @extend %section
 
+  ul
+    @extend %post_list_styles
+
 ////////////////////////////////////////////
 //                Projects                //
 ////////////////////////////////////////////
 
 .projects
   @extend %section
+
+  ul
+    @extend %post_list_styles
 
 ////////////////////////////////////////////
 //                 Contact                //
