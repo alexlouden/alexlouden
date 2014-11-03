@@ -1,22 +1,26 @@
 {% extends "base.html" %}
-{% block title %}{{ title }} | Cactus{% endblock title %}
+{% block title %}{{ title }} | Alex Louden{% endblock title %}
 
 {% block body_class %}post{% endblock body_class %}
 
-{% block content %}
+{% block header %}
 <header>
   <a class="logo" href="/">
     {% include 'logo.svg' %}
   </a>
 </header>
+{% endblock header %}
 
+{% block content %}
 <article class="post">
 	
-	<h1>{{ title }}</h1>
-	<h2 class="headline">{{ headline }} </h2>
-	<aside>{{ date|date:"M j Y" }}</aside>
+	<section class="top">
+		<h1>{{ title }}</h1>
+		{% if headline %}<h2>{{ headline }}</h2>{% endif %}
+		<aside>{{ date|date:"F Y" }}</aside>
+	</section>
 
-	<section>
+	<section class="main">
 		{% block body %}
 		This is where the post contents is.
 		{% endblock body %}
@@ -24,7 +28,7 @@
 		
 </article>
 
-<footer class="post-navigation">
+<footer class="post">
 	<span class="prev">
 		{% if prevPost %}
 			<a href='/{{ prevPost.path }}'>

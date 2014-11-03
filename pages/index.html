@@ -34,7 +34,7 @@
     <ul>
       {% for post in posts %}
       <li> 
-        <a href='/{{ post.path }}'><aside class="dates">{{ post.date|date:"M Y" }}</aside></a>
+        <a href='/{{ post.path }}'><aside class="dates">{{ post.date|date:"F Y" }}</aside></a>
         <a href='/{{ post.path }}'>{{ post.title }} <h2>{{ post.headline }}</h2></a>
       </li>
       {% endfor %}
@@ -50,7 +50,7 @@
     <ul>
       {% for project in projects %}
       <li> 
-        <a href='/{{ project.path }}'><aside class="dates">{{ project.date|date:"M Y" }}</aside></a>
+        <a href='/{{ project.path }}'><aside class="dates">{{ project.date|date:"F Y" }}</aside></a>
         <a href='/{{ project.path }}'>{{ project.title }} <h2>{{ project.headline }}</h2></a>
       </li>
       {% endfor %}

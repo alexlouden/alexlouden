@@ -5,12 +5,12 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	<title>{% block title %}Blog{% endblock %}</title>
+	<title>{% block title %}Alex Louden{% endblock %}</title>
 	<link rel="shortcut icon" href="{% static '/images/favicon.ico' %}">	
 	<link rel="stylesheet" href="{% static '/css/style.css' %}">
 	<link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Playfair+Display' rel='stylesheet' type='text/css'>
-	<link rel="alternate" type="application/rss+xml" title="My Blog Feed" href="/rss.xml">
+	<link rel="alternate" type="application/rss+xml" title="Feed" href="/rss.xml">
 		
 	<link rel="shortcut icon" href="/images/favicon.ico">
 	<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
@@ -21,6 +21,7 @@
 <body class="{% block body_class %}home{% endblock body_class %}">
 	
 	{% block header %}
+	Header
 	{% endblock header %}
 
 	{% block content %}

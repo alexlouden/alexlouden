@@ -11,11 +11,22 @@ article.post
 
 article.post
 
-  h1, h2.headline
+  section.top
     text-align: center
+    margin-bottom: 40px
+
+    h2
+      font: italic 22px/1.3em $serif_font
+      color: #aaa
+
+    aside
+      // Date
+      font-family: $serif_font
+      font-size: 16px
+      font-variant: small-caps
 
   // Headings and paragraphs
-  h1, h3, h4, h5, p
+  h1, h2, h3, h4, h5, p
     margin-bottom: 20px
 
   p
@@ -26,17 +37,15 @@ article.post
 
   h2
     color: #bbb
-    margin-bottom: 20px
     color: inherit
     font: 400 18px/1.7em $helvetica
 
-  h2.headline
-    font: italic 22px/1.3em $serif_font
-    color: #aaa
-    margin: -5px 0 40px 0
-
   h3, h4, h5
     color: #333
+
+  h3
+    font-size: 20px
+    font-weight: bold
 
   h4
     font-size: 16px
@@ -138,39 +147,11 @@ article.post
     border-radius: 3px
 
 
-
-////////////////////////////////////////////
-//              About section             //
-////////////////////////////////////////////
-
-article.post
-
-  // "Posted by" section
-  footer
-    font-size: 13px
-    font-weight: bold
-    color: #aaa
-    margin-bottom: 40px
-    line-height: 1.4
-    border-top: 1px solid #eee
-    padding-top: 40px
-    margin-top: 80px
-    color: #444
-    div
-      span
-        color: #666
-        color: #333
-        color: #aaa
-        font-weight: 500
-        display: block
-      margin: 0 25px 0 0
-      float: left
-
 ////////////////////////////////////////////
 //            Bottom navigation           //
 ////////////////////////////////////////////
 
-.post-navigation
+footer.post
   @extend %layout
   padding-top: 20px
 
