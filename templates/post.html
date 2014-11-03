@@ -4,26 +4,24 @@
 {% block body_class %}post{% endblock body_class %}
 
 {% block content %}
-<section class="wrapper group">
-
-<header id="header">
-<a id="title" href="/">Blog</a>
+<header>
+  <a class="logo" href="/">
+    {% include 'logo.svg' %}
+  </a>
 </header>
 
 <article class="post">
 	
-	<header>
-		<h1>{{ title }}</h1>
-		<h2 class="headline">{{ headline }} </h2>
-	</header>
+	<h1>{{ title }}</h1>
+	<h2 class="headline">{{ headline }} </h2>
 
-	<section id="post-body">
+	<section>
 		{% block body %}
 		This is where the post contents is.
 		{% endblock body %}
 	</section>
 		
-	<footer id="post-meta" class="group">
+	<footer>
 		<div><span>Posted on </span> {{ date|date:"M j" }}</div>
 		<div><span>Written by</span> {{ author }}</div>
 	</footer>
@@ -48,6 +46,4 @@
 		</span>
 	</nav>
 </footer>
-
-</section>
 {% endblock content %}

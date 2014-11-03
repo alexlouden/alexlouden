@@ -1,77 +1,12 @@
 
 /*=========================================
-General Spacing
-=========================================== */
-.post h1, h3, h4, h5, p, .post-body ul, .post-list li, pre {
-margin-bottom: 20px;
-}
-
-/*=========================================
-Base
-=========================================== */
-
-.wrapper {
-	padding:100px 40px 100px 40px;
-	max-width:600px; 
-	margin:0 auto;
-}
-
-
-/*=========================================
 Typography
 =========================================== */
-/*Accent color*/
-a, 
-#title,
-.post-list a:hover,
-.post-list li:hover .dates,
-#title:hover {
-	text-decoration:none; 
-	color:#5badf0;
-	color:#5694f1;
-}
-
-p a { color:#5694f1; }
-
-/*Transitions*/
-a,
-#post-nav a,
-.post-list a	{ 
-	-webkit-transition: all 0.15s ease;
-	-moz-transition: all 0.15s ease;
-	-ms-transition: all 0.15s ease;
-	-o-transition: all 0.15s ease;
-	transition: all 0.15s ease;
-}
-
-ul 	{ margin:0; padding:0; }
-li	{ list-style-type:circle; list-style-position:inside; }
-
-/* Line Height */
-#post-body, p { line-height:1.7; }
-
-b, strong { font-weight: bold; }
-em, i { font-style: italic; }
-
 
 .description {
 	float:right;
 	font:italic 14px/1.4em Georgia,serif;
 	color:#aaa;
-}
-
-.post h2 {
-	font:italic 19px/1.3em Georgia,serif;
-	color:#bbb;
-	margin-bottom:20px;
-	color:inherit;
-	font:400 18px/1.7em "Helvetica Neue",Helvetica,Arial,sans-serif;
-}
-
-.post h2.headline {
-	font:italic 22px/1.3em Georgia,serif;
-	color:#aaa;
-	margin:-5px 0 40px 0;
 }
 
 h3, h4, h5 { color:#333; }
@@ -154,10 +89,6 @@ img {
 	border-radius: 3px;
 }
 
-#badge {
-	position: absolute; bottom: 10px; right: 10px;
-	height: 48px; width: 48px;
-}
 /*=========================================
 Post Page
 =========================================== */
@@ -185,25 +116,6 @@ Post Page
 #post-meta div {
 	margin:0 25px 0 0;
 	float:left;
-}
-
-#sharing {
-	float:right;
-	margin:-2px;
-}
-
-#sharing a {
-	font-size:20px;
-	font-size:23px;
-	margin-left:1px;
-	margin-top:4px;
-	color:#d4d4d4;
-	display:inline-block;
-	vertical-align:middle;
-}
-
-#sharing a:hover {
-	color: #444;
 }
 
 /*=========================================
@@ -255,61 +167,22 @@ Post Navigation
 	right: -3px;
 }
 
-/*=========================================
-Archive
-=========================================== */
-h1.archive {
-	margin-bottom:0px;
-}
-
-h2.month {
-	width:100%;
-	font:bold 13px/1 "Helvetica Neue",helvetica,Arial,sans-serif;
-	text-transform:uppercase;
-	margin-top:40px;
-	margin-bottom:10px;
-	padding-bottom:10px;
-	border-bottom:1px solid #eee;
-}
-
-#archive-list li:last-child {
-	margin-bottom:0;
-}
-
-#archive-list a {
-	display:block;
-	font:bold 17px/1.7 "Helvetica Neue",helvetica,Arial,sans-serif;
-	color:#333;
-}
-
-#archive-list .dates {
-	float:right;
-	position:relative;
-	top:1px;
-	font:300 17px/1.7 "Helvetica Neue",helvetica,Arial,sans-serif;
-	color:#bbb;
-}
-
-#archive-list li a:hover,#archive-list li:hover .dates {
-	color: #5694f1;
-}
-
 /*=====================*/
 
-@media screen and (max-width: 540px) {
-.wrapper { padding:20px 20px 20px 20px;}
-#header { margin-bottom: 60px; border-bottom: 1px solid #eee; }
-.post { margin: 40px 0; }
-#footer { margin-top: 60px; }
+// @media screen and (max-width: 540px) {
+// .wrapper { padding:20px 20px 20px 20px;}
+// #header { margin-bottom: 60px; border-bottom: 1px solid #eee; }
+// .post { margin: 40px 0; }
+// #footer { margin-top: 60px; }
 
-.post-list, #archive-list { margin-top: 0; }
-#post-meta { margin-top: 60px; }
+// .post-list, #archive-list { margin-top: 0; }
+// #post-meta { margin-top: 60px; }
 
-#title { font-size: 17px; }
-.post-list .dates { display: none; }
+// #title { font-size: 17px; }
+// .post-list .dates { display: none; }
 
-.post-list-footer { margin-top: 20px; padding-top: 40px; }
+// .post-list-footer { margin-top: 20px; padding-top: 40px; }
 
-h1 { font-size: 26px; }
-.post h2.headline { font-size: 20px; }
-}
+// h1 { font-size: 26px; }
+// .post h2.headline { font-size: 20px; }
+// }
