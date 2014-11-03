@@ -36,6 +36,7 @@ $ ->
             .siblings().removeClass('active')
       
   $(window).scroll onscroll
+  onscroll()
 
   # Scroll to links
   $('nav a').click (e) ->
