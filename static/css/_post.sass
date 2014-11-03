@@ -3,40 +3,7 @@
 ////////////////////////////////////////////
 
 article.post
-  padding: 100px 40px 100px 40px
-  max-width: 600px
-  margin: 80px auto 0 auto
-
-// TODO fix
-body.post > footer
-  max-width: 600px
-  margin: 0 auto
-  padding: 100px 0
-
-  nav
-    border-top: 1px solid #eee
-    text-align: center
-    padding-top: 20px
-    font-size: 13px
-    font-weight: 500
-    span
-      +transition(all 0.1s linear)
-      position: relative
-      &.prev
-        float: left
-      &.next
-        float: right
-      .arrow
-        position: relative
-        padding: 1px
-      &.prev:hover .arrow
-        left: -4px
-      &.next:hover .arrow
-        right: -4px
-      &.prev:hover
-        left: -3px
-      &.next:hover
-        right: -3px
+  @extend %layout
 
 ////////////////////////////////////////////
 //         Typography and Spacing         //
@@ -54,21 +21,129 @@ article.post
   p
     line-height: 1.7
   
-  // Lists and blocks
-  .post-body ul, .post-list li, pre
+  ul, pre
     margin-bottom: 20px
 
   h2
-    font: italic 19px/1.3em Georgia,serif
     color: #bbb
     margin-bottom: 20px
     color: inherit
     font: 400 18px/1.7em $helvetica
 
   h2.headline
-    font: italic 22px/1.3em Georgia,serif
+    font: italic 22px/1.3em $serif_font
     color: #aaa
     margin: -5px 0 40px 0
+
+  h3, h4, h5
+    color: #333
+
+  h4
+    font-size: 16px
+    font-weight: bold
+
+  h5
+    font-size: 15px
+    font-weight: bold
+
+  h6
+    font-size: 13px
+    font-weight: bold
+    color: #666
+    margin-bottom: 6px
+
+  a
+    color: $link_blue
+
+
+////////////////////////////////////////////
+//             Element styles             //
+////////////////////////////////////////////
+
+article.post
+
+  p.small
+    color: #bbb
+    font-size: 14px
+    line-height: 1.5
+    display: block
+
+  hr
+    display: block
+    border: none
+    height: 3px
+    margin: 40px auto
+    background: #f4f4f4
+
+  // Code and blocks
+  span.code
+    font-family: $code_font
+    background-color: #EEE
+    font-size: 14px
+
+  pre
+    font-family: $code_font
+    white-space: pre-wrap
+    border: 1px solid #ddd
+    padding: 20px
+    background-color: #fdfdfd
+    font-size: 14px
+    overflow: auto
+    border-radius: 3px
+
+  blockquote
+    padding-left: 15px
+    border-left: 3px solid #eee
+
+  // Tables
+  table
+    width: 100%
+    margin: 40px 0
+    border-collapse: collapse
+    font-size: 13px
+    line-height: 1.5em
+
+  th, td
+    text-align: left
+    padding-right: 20px
+    vertical-align: top
+
+  table td, td
+    border-spacing: none
+    border-style: solid
+    padding: 10px 15px
+    border-width: 1px 0 0 0
+
+  tr
+    > td
+      border-top: 1px solid #eaeaea
+    &:nth-child(odd) > td
+      background: #fcfcfc
+
+  thead th, th
+    text-align: left
+    padding: 10px 15px
+    height: 20px
+    font-size: 13px
+    font-weight: bold
+    color: #444
+    border-bottom: 1px solid #dadadc
+    cursor: default
+    white-space: nowrap
+  
+  // Images
+  img
+    width: 100%
+    max-width: 100%
+    border-radius: 3px
+
+
+
+////////////////////////////////////////////
+//              About section             //
+////////////////////////////////////////////
+
+article.post
 
   // "Posted by" section
   footer
@@ -91,100 +166,44 @@ article.post
       margin: 0 25px 0 0
       float: left
 
-  a
-    color: #5694f1
-
-
 ////////////////////////////////////////////
-//             Element styles             //
+//            Bottom navigation           //
 ////////////////////////////////////////////
 
-h3, h4, h5
-  color: #333
+.post-navigation
+  @extend %layout
+  padding-top: 20px
 
-h4
-  font-size: 16px
-  font-weight: bold
+  font-family: $serif_font
+  font-variant: small-caps
+  color: $almost_black
 
-h5
+  text-align: center
+  border-top: 1px solid #eee
   font-size: 15px
-  font-weight: bold
+  font-weight: 500
 
-h6
-  font-size: 13px
-  font-weight: bold
-  color: #666
-  margin-bottom: 6px
+  span
+    +transition(all 0.1s linear)
+    position: relative
 
-p.small
-  color: #bbb
-  font-size: 14px
-  line-height: 1.5
-  display: block
+  a
+    color: $almost_black
 
-blockquote
-  padding-left: 15px
-  border-left: 3px solid #eee
+  .arrow
+    position: relative
+    padding: 1px
 
-hr
-  display: block
-  border: none
-  height: 3px
-  margin: 40px auto
-  background: #f4f4f4
-
-span.code
-  font-family: Menlo, Monaco, Courier
-  background-color: #EEE
-  font-size: 14px
-
-pre
-  font-family: Menlo, Monaco, Courier
-  white-space: pre-wrap
-  border: 1px solid #ddd
-  padding: 20px
-  background-color: #fdfdfd
-  font-size: 14px
-  overflow: auto
-  border-radius: 3px
-
-table
-  width: 100%
-  margin: 40px 0
-  border-collapse: collapse
-  font-size: 13px
-  line-height: 1.5em
-
-th, td
-  text-align: left
-  padding-right: 20px
-  vertical-align: top
-
-table td, td
-  border-spacing: none
-  border-style: solid
-  padding: 10px 15px
-  border-width: 1px 0 0 0
-
-tr
-  > td
-    border-top: 1px solid #eaeaea
-  &:nth-child(odd) > td
-    background: #fcfcfc
-
-thead th, th
-  text-align: left
-  padding: 10px 15px
-  height: 20px
-  font-size: 13px
-  font-weight: bold
-  color: #444
-  border-bottom: 1px solid #dadadc
-  cursor: default
-  white-space: nowrap
-
-img
-  width: 100%
-  max-width: 100%
-  border-radius: 3px
-
+  .prev
+    float: left
+    &:hover
+      left: -3px
+    &:hover .arrow
+      left: -4px
+  
+  .next
+    float: right
+    &:hover .arrow
+      right: -4px
+    &:hover
+      right: -3px

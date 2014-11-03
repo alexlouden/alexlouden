@@ -25,3 +25,15 @@ $break-xl: 1200px
 @mixin smalldesktop
   @media only screen and (max-width: $break-l)
     @content
+
+////////////////////////////////////////////
+//                  Layout                //
+////////////////////////////////////////////
+
+%layout
+  max-width: 600px
+  margin: 0 auto
+  padding: 150px 40px
+
+  +mobile
+    padding: 80px 40px
