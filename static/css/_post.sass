@@ -3,11 +3,40 @@
 ////////////////////////////////////////////
 
 article.post
-  margin: 80px 0 0 0
-
   padding: 100px 40px 100px 40px
   max-width: 600px
+  margin: 80px auto 0 auto
+
+// TODO fix
+body.post > footer
+  max-width: 600px
   margin: 0 auto
+  padding: 100px 0
+
+  nav
+    border-top: 1px solid #eee
+    text-align: center
+    padding-top: 20px
+    font-size: 13px
+    font-weight: 500
+    span
+      +transition(all 0.1s linear)
+      position: relative
+      &.prev
+        float: left
+      &.next
+        float: right
+      .arrow
+        position: relative
+        padding: 1px
+      &.prev:hover .arrow
+        left: -4px
+      &.next:hover .arrow
+        right: -4px
+      &.prev:hover
+        left: -3px
+      &.next:hover
+        right: -3px
 
 ////////////////////////////////////////////
 //         Typography and Spacing         //
@@ -41,26 +70,121 @@ article.post
     color: #aaa
     margin: -5px 0 40px 0
 
+  // "Posted by" section
   footer
     font-size: 13px
     font-weight: bold
+    color: #aaa
     margin-bottom: 40px
     line-height: 1.4
     border-top: 1px solid #eee
     padding-top: 40px
     margin-top: 80px
     color: #444
-
-  div span
-    color: #666
-    color: #333
-    color: #aaa
-    font-weight: 500
-    display: block
-
-  div
-    margin: 0 25px 0 0
-    float: left
+    div
+      span
+        color: #666
+        color: #333
+        color: #aaa
+        font-weight: 500
+        display: block
+      margin: 0 25px 0 0
+      float: left
 
   a
     color: #5694f1
+
+
+////////////////////////////////////////////
+//             Element styles             //
+////////////////////////////////////////////
+
+h3, h4, h5
+  color: #333
+
+h4
+  font-size: 16px
+  font-weight: bold
+
+h5
+  font-size: 15px
+  font-weight: bold
+
+h6
+  font-size: 13px
+  font-weight: bold
+  color: #666
+  margin-bottom: 6px
+
+p.small
+  color: #bbb
+  font-size: 14px
+  line-height: 1.5
+  display: block
+
+blockquote
+  padding-left: 15px
+  border-left: 3px solid #eee
+
+hr
+  display: block
+  border: none
+  height: 3px
+  margin: 40px auto
+  background: #f4f4f4
+
+span.code
+  font-family: Menlo, Monaco, Courier
+  background-color: #EEE
+  font-size: 14px
+
+pre
+  font-family: Menlo, Monaco, Courier
+  white-space: pre-wrap
+  border: 1px solid #ddd
+  padding: 20px
+  background-color: #fdfdfd
+  font-size: 14px
+  overflow: auto
+  border-radius: 3px
+
+table
+  width: 100%
+  margin: 40px 0
+  border-collapse: collapse
+  font-size: 13px
+  line-height: 1.5em
+
+th, td
+  text-align: left
+  padding-right: 20px
+  vertical-align: top
+
+table td, td
+  border-spacing: none
+  border-style: solid
+  padding: 10px 15px
+  border-width: 1px 0 0 0
+
+tr
+  > td
+    border-top: 1px solid #eaeaea
+  &:nth-child(odd) > td
+    background: #fcfcfc
+
+thead th, th
+  text-align: left
+  padding: 10px 15px
+  height: 20px
+  font-size: 13px
+  font-weight: bold
+  color: #444
+  border-bottom: 1px solid #dadadc
+  cursor: default
+  white-space: nowrap
+
+img
+  width: 100%
+  max-width: 100%
+  border-radius: 3px
+
