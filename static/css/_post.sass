@@ -5,6 +5,8 @@
 article.post
   @extend %layout
 
+  padding-top: 100px
+
 ////////////////////////////////////////////
 //         Typography and Spacing         //
 ////////////////////////////////////////////
@@ -13,7 +15,7 @@ article.post
 
   section.top
     text-align: center
-    margin-bottom: 40px
+    margin-bottom: 60px
 
     h2
       font: italic 22px/1.3em $serif_font
@@ -24,6 +26,8 @@ article.post
       font-family: $serif_font
       font-size: 16px
       font-variant: small-caps
+      text-transform: lowercase
+
 
   // Headings and paragraphs
   h1, h2, h3, h4, h5, p
@@ -157,11 +161,12 @@ footer.post
 
   font-family: $serif_font
   font-variant: small-caps
+  text-transform: lowercase
   color: $almost_black
 
   text-align: center
   border-top: 1px solid #eee
-  font-size: 15px
+  font-size: 17px
   font-weight: 500
 
   span
@@ -177,14 +182,6 @@ footer.post
 
   .prev
     float: left
-    &:hover
-      left: -3px
-    &:hover .arrow
-      left: -4px
-  
+     
   .next
     float: right
-    &:hover .arrow
-      right: -4px
-    &:hover
-      right: -3px
