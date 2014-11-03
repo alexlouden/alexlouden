@@ -4,7 +4,8 @@ $ ->
   $body = $('body')
   fixed = false
   navheight = 115
-  fixednavheight = 55
+  fixednavheight = 55 + 100
+  # 100 extra so that you're properly in the section before switching
 
   sections = (
     {
