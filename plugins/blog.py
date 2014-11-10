@@ -57,14 +57,14 @@ def parse_page(page):
     context_post = {"path": page.path}
 
     # Check if we have the required keys
-    for field in ["title", "headline", "date", "author"]:
+    for field in ["title", "date"]:
 
         if not field in context:
             logging.warning("Page %s is missing field: %s" % (page.path, field))
         else:
             if field == "date":
                 # Parse date from string to datetime
-                context_post[field] = _convertDate(context[field], page.path)
+                context_post[field] = parse_date(context[field], page.path)
             else:
                 context_post[field] = context[field]
 
@@ -100,14 +100,13 @@ def preBuildPage(site, page, context, data):
 
 # Utilities for the functions above
 
-def _convertDate(date_string, path):
+def parse_date(date_string, path):
     # Convert a string to a date object
     try:
-        return datetime.datetime.strptime(date_string,
-                                          Global["config"]["date_format"])
-    except Exception, e:
-        logging.warning("Date format not correct for page %s, should be %s\n%s"
-                        % (path, Global["config"]["date_format"], e))
+        return datetime.datetime.strptime(date_string, Global["config"]["date_format"])
+    except Exception as e:
+        msg = "Date format not correct for page {}, should be {}\n{}".format(path, Global["config"]["date_format"], e)
+        logging.warning(msg)
 
 
 def _get_node(template, context=Context(), name='subject'):
