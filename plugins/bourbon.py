@@ -3,10 +3,10 @@ import pipes
 import subprocess
 import logging
 
+logger = logging.getLogger(__name__)
+
 
 def run(command):
-
-    logger = logging.getLogger(__name__)
 
     logger.debug(command)
 
@@ -40,3 +40,11 @@ def preBuild(site):
         (pipes.quote(site.static_path), pipes.quote(scss_import_path)))
 
     run('find %s -name "*.coffee" -exec coffee -c {} \;' % pipes.quote(site.static_path))
+
+
+def preDeploy(site):
+
+    logger.info('Predeploying!')
+    run('pwd')
+
+    # TODO minify js, minify css, hash version files
