@@ -13,7 +13,7 @@
  
   +mobile
     .content
-      padding: 80px 40px
+      padding: 80px 35px
 
 
 %post_list_styles
@@ -61,10 +61,19 @@
 .about
   @extend %section
 
+  +display(flex)
+  min-height: 70vh // take up most of the viewport
+ 
+  .content
+    margin: auto
+    padding-top: 40px
+    padding-bottom: 150px
+
   h1
     font-size: 28px
     line-height: 1.3
     letter-spacing: 0.2px
+    margin-bottom: 0
 
   +mobile
     h1
@@ -73,6 +82,7 @@
 
     .content
       padding-top: 50px
+      padding-bottom: 50px
 
 ////////////////////////////////////////////
 //                  Posts                 //
