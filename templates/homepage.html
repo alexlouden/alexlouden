@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+  {% block scripts %}
+  {{ block.super }}
+  <script src="{% static '/js/main.js' %}"></script>
+  {% endblock scripts %}
+
+{% block header %}
+<header>
+  <a class="logo" href="/">
+    {% include 'logo.svg' %}
+  </a>
+  <nav>
+    <a href="#about" class="active">about</a>
+    <a href="#posts">posts</a>
+    <a href="#projects">projects</a>
+    <a href="#contact">contact</a>
+  </nav>
+</header>
+{% endblock header %}
+
+{% block content %}
+
+<section class="about">
+  <div class="content">
+    <h1>{% block blurb %}{% endblock %}</h1>
+  </div>
+</section>
+
+<section class="posts">
+  <div class="content">
+
+    <h1>Posts</h1>
+    <ul>
+      {% for post in posts %}
+      <li> 
+        <a href='/{{ post.path }}'><aside class="dates">{{ post.date|date:"F Y" }}</aside></a>
+        <a href='/{{ post.path }}'>{{ post.title }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+
+  </div>
+</section>
+
+<section class="projects">
+  <div class="content">
+
+    <h1>Projects</h1>
+    <ul>
+      {% for project in projects %}
+      <li> 
+        <a href='/{{ project.path }}'><aside class="dates">{{ project.date|date:"F Y" }}</aside></a>
+        <a href='/{{ project.path }}'>{{ project.title }} <h2>{{ project.headline }}</h2></a>
+      </li>
+      {% endfor %}
+    </ul>
+
+  </div>
+</section>
+
+<section class="contact">
+  <div class="content">    
+    <span class="logo">{% include 'logo.svg' %}</span>
+    <h3>Alex Louden</h3>
+    
+    <div class="details">
+      {% block details %}{% endblock %}
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

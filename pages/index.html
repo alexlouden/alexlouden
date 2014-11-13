@@ -1,78 +1,23 @@
-{% extends "base.html" %}
+{% extends "homepage.html" %}
 
-  {% block scripts %}
-  {{ block.super }}
-  <script src="{% static '/js/main.js' %}"></script>
-  {% endblock scripts %}
+{% block blurb %}
 
-{% block header %}
-<header>
-  <a class="logo" href="/">
-    {% include 'logo.svg' %}
-  </a>
-  <nav>
-    <a href="#about" class="active">about</a>
-    <a href="#posts">posts</a>
-    <a href="#projects">projects</a>
-    <a href="#contact">contact</a>
-  </nav>
-</header>
-{% endblock header %}
+Alex Louden is a mechatronic engineer with a passion for software, robotics and the web. He focuses on building scalable systems on cloud computing platforms.
 
-{% block content %}
+{% endblock blurb %}
 
-<section class="about">
-  <div class="content">
-    <h1>Alex Louden is a mechatronic engineer with a passion for software, robotics and the web. He focuses on building scalable systems on cloud computing platforms.</h1>
-  </div>
-</section>
+{% block details %}
+{% filter markdown %}
 
-<section class="posts">
-  <div class="content">
+perth australia
 
-    <h1>Posts</h1>
-    <ul>
-      {% for post in posts %}
-      <li> 
-        <a href='/{{ post.path }}'><aside class="dates">{{ post.date|date:"F Y" }}</aside></a>
-        <a href='/{{ post.path }}'>{{ post.title }}</a>
-      </li>
-      {% endfor %}
-    </ul>
+[+61 433 807 123](tel:+61433807123)
 
-  </div>
-</section>
+[alex@louden.com](mailto:alex@louden.com)
 
-<section class="projects">
-  <div class="content">
+[github](https://github.com/alexlouden/)
 
-    <h1>Projects</h1>
-    <ul>
-      {% for project in projects %}
-      <li> 
-        <a href='/{{ project.path }}'><aside class="dates">{{ project.date|date:"F Y" }}</aside></a>
-        <a href='/{{ project.path }}'>{{ project.title }} <h2>{{ project.headline }}</h2></a>
-      </li>
-      {% endfor %}
-    </ul>
+[stack overflow](https://stackoverflow.com/users/1129194/alex-l/)
 
-  </div>
-</section>
-
-<section class="contact">
-  <div class="content">    
-    <span class="logo">{% include 'logo.svg' %}</span>
-    <h3>Alex Louden</h3>
-    
-    <div class="details">
-      <div>perth australia</div>
-      <div><a href="tel:+61433807123">+61 433 807 123</a></div>
-      <div><a href="mailto:alex@louden.com">alex@louden.com</a></div>
-
-      <div><a href="https://github.com/alexlouden/">github</a></div>
-      <div><a href="https://stackoverflow.com/users/1129194/alex-l/">stack overflow</a></div>
-    </div>
-  </div>
-</section>
-
-{% endblock content %}
+{% endfilter %}
+{% endblock details %}
