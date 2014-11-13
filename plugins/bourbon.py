@@ -8,9 +8,8 @@ logger = logging.getLogger(__name__)
 
 def run(command):
 
-    logger.debug(command)
-
-    # logger.info(os.environ['PATH'])
+    logger.info('-'*50)
+    logger.info('$ ' + command)
 
     process = subprocess.Popen(
         [command],
@@ -33,9 +32,20 @@ def preBuild(site):
 
     scss_import_path = os.path.join(site.static_path, "lib", "bourbon")
 
+    logger.info('='*50)
+    logger.info('Rebuilding')
+    logger.info('='*50)
 
-    run('find %s -name "*.sass" -not -name "_*" -exec sass -C --update --load-path %s {} \;' %
-        (pipes.quote(site.static_path), pipes.quote(scss_import_path)))
+    run('sass -v')
+
+    sass_command = (
+        'find {static_path} -name "*.sass" -not -name "_*" -exec '
+        'sass -C --update --load-path {import_path} {{}} \;'
+    )
+
+    run(sass_command.format(
+        static_path=pipes.quote(site.static_path),
+        import_path=pipes.quote(scss_import_path)))
 
     run('find %s -name "*.coffee" -exec coffee -c {} \;' % pipes.quote(site.static_path))
 
