@@ -1,6 +1,4 @@
-
-
-$ ->
+sticky_header = ->
   $body = $('body')
   fixed = false
   navheight = 115
@@ -37,6 +35,14 @@ $ ->
       
   $(window).scroll onscroll
   onscroll()
+
+
+$ ->
+
+  small_nav = $('nav').css('max-width') == "300px"
+
+  if not small_nav:
+    sticky_header()
 
   # Scroll to links
   $('nav a').click (e) ->
