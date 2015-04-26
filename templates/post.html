@@ -3,6 +3,11 @@
 
 {% block body_class %}post{% endblock body_class %}
 
+{% block scripts %}
+{{ block.super }}
+  <script src="{% static '/js/prism.js' %}"></script>
+{% endblock scripts %}
+
 {% block header %}
 <header>
   <a class="logo" href="/">
