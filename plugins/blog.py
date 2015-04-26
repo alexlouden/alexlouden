@@ -1,9 +1,18 @@
 import datetime
 import logging
 
+import sys
+sys.path.insert(1, '/usr/local/lib/python2.7/site-packages')
+
+from markdown import markdown
+from markdown.extensions.fenced_code import FencedCodeExtension
+
 from django.template import Context
 from django.template.loader import get_template
 from django.template.loader_tags import BlockNode, ExtendsNode
+
+from cactus.template_tags import register
+
 
 Global = {"config": {}, "posts": [], "projects": []}
 
@@ -14,29 +23,38 @@ Global["config"]["post_body_block"] = "body"
 by_date = lambda x: x.get("date")
 
 
+def mymarkdown(content):
+    return markdown(
+        content,
+        extensions=[
+            FencedCodeExtension()
+        ]
+    )
+
+
 def preBuild(site):
+
+    register.filter('mymarkdown', mymarkdown)
 
     global Global
 
     for page in site.pages():
 
+        # Skip non-html pages
+        if not page.path.endswith('.html'):
+            continue
+
         if page.path.startswith('posts/'):
+            article_type = 'posts'
 
-            # Skip non-html pages
-            if not page.path.endswith('.html'):
-                continue
+        elif page.path.startswith('projects/'):
+            article_type = 'projects'
 
-            context = parse_page(page)
-            Global["posts"].append(context)
+        else:
+            continue
 
-        if page.path.startswith('projects/'):
-
-            # Skip non-html pages
-            if not page.path.endswith('.html'):
-                continue
-
-            context = parse_page(page)
-            Global["projects"].append(context)
+        context = parse_page(page)
+        Global[article_type].append(context)
 
     # Sort the posts by date and add the next and previous page indexes
     Global["posts"] = sorted(Global["posts"], key=by_date, reverse=True)

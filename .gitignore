@@ -4,3 +4,4 @@ base.css
 style.css
 *.map
 .deploy
+*.pyc
