@@ -37,19 +37,20 @@ sticky_header = ->
   onscroll()
 
 
+on_nav_click = (e) ->
+  try
+    href = e.target.href.split('#')[1]
+    e.preventDefault()
+    newtop = $('section.' + href).offset().top
+    $("html, body").animate(scrollTop: newtop, 500)
+  catch e
+    return
+
 $ ->
 
   small_nav = $('nav').css('max-width') == "300px"
 
-  if not small_nav:
+  if not small_nav
     sticky_header()
 
-  # Scroll to links
-  $('nav a').click (e) ->
-    try
-      href = e.target.href.split('#')[1]
-      e.preventDefault()
-      newtop = $('section.' + href).offset().top
-      $("html, body").animate(scrollTop: newtop, 500)
-    catch e
-      return
+  $('nav a').on 'click', on_nav_click
