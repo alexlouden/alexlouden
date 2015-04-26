@@ -31,3 +31,4 @@ def run(command):
 
 def preBuild(site):
     run('coffee -c %s/js/*.coffee' % pipes.quote(site.static_path))
+    run('find %s -name "*.sass" -not -name "_*" -exec scss -C --update {} \;' % pipes.quote(site.static_path))
