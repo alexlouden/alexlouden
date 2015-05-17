@@ -1,6 +1,1 @@
-{
-    "aws-access-key": "AKIAJ4PXTEGMECTBCFRA",
-    "aws-bucket-name": "alexlouden.com",
-    "aws-bucket-website": "alexlouden.com.s3-website-us-east-1.amazonaws.com",
-    "port": 8463
-}
+{"aws-bucket-name":"alexlouden.com","aws-access-key":"AKIAITIZJBTXK6BYVJ5Q","aws-bucket-website":"alexlouden.com.s3-website-us-east-1.amazonaws.com","port":8463}
