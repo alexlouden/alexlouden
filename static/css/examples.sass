@@ -1,0 +1,119 @@
+@import "bourbon/bourbon"
+
+////////////////////////////////////////////
+//              CSS features              //
+////////////////////////////////////////////
+
+.example
+
+  // 1. Keyframe animations
+  // Spin
+  +keyframes(spin)
+    0%
+      +transform(rotate(0))
+    100%
+      +transform(rotate(360deg))
+
+  .spin
+    text-align: center
+    +animation(spin 1s infinite linear)
+
+  // Flipping butterfly
+  +keyframes(flip)
+    0%
+      +transform(perspective(400px) translateZ(0) rotateY(0) scale(1))
+      +animation-timing-function(ease-out)
+
+    40%
+      +transform(perspective(400px) translateZ(150px) rotateY(170deg) scale(1))
+      +animation-timing-function(ease-out)
+
+    50%
+      +transform(perspective(400px) translateZ(150px) rotateY(190deg) scale(1))
+      +animation-timing-function(ease-in)
+
+    80%
+      +transform(perspective(400px) translateZ(0) rotateY(360deg) scale(.95))
+      +animation-timing-function(ease-in)
+
+    100%
+      +transform(perspective(400px) translateZ(0) rotateY(360deg) scale(1))
+      +animation-timing-function(ease-in)
+
+  .flip
+    +backface-visibility(visible)
+    +animation(flip 1s infinite)
+
+  // 2. Webkit box reflection
+  .box-reflection
+    -webkit-box-reflect: below 2px linear-gradient(transparent, transparent 50%, rgba(255, 255, 255, 0.4))
+    margin-bottom: 150px
+  
+  // 3. Filters
+  // Grayscale
+  .grayscale
+    +filter(grayscale(50%))
+  
+  // Brightness
+  +keyframes(brightness)
+    0%
+      +filter(brightness(100%))
+    100%
+      +filter(brightness(200%))
+
+  .filters
+    +animation(brightness 3s linear 0s infinite alternate)
+
+  // Font settings
+  &.font
+    font-size: 50px
+    font-family: "Playfair Display"
+    line-height: 1
+    margin-bottom: 20px
+    text-rendering: optimizeLegibility
+
+    &.bars
+      display: inline-block
+      position: relative
+      
+      // Make children above line
+      & > *
+        z-index: 5
+
+      &:before
+        content: ""
+        position: absolute
+        top: 9px
+        height: 34px
+        left: 0
+        width: 100%
+        z-index: 4
+        border:
+          top: 1px solid transparentize(black, 0.85)
+          bottom: 1px solid transparentize(black, 0.85)
+
+
+  .liga
+    +font-feature-settings("liga" on)
+  .no-liga
+    +font-feature-settings("liga" off)
+
+  .dlig
+    +font-feature-settings("dlig" on)
+  .no-dlig
+    +font-feature-settings("dlig" off)
+
+  .onum
+    +font-feature-settings("onum" on)
+  .lnum
+    +font-feature-settings("lnum" on)
+
+  .frac
+    +font-feature-settings("frac" on)
+  .no-frac
+    +font-feature-settings("frac" off)
+
+  .kern
+    +font-feature-settings("kern" on)
+  .no-kern
+    +font-feature-settings("kern" off)

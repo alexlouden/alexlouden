@@ -1,0 +1,202 @@
+title: Modern CSS features in 2015
+date: 26-04-2015
+
+{% extends "post.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="//brick.a.ssl.fastly.net/Playfair+Display:400">
+<link rel="stylesheet" href="{% static '/css/examples.css' %}">
+{% endblock %}
+
+{% block body %}
+
+{% filter markdown %}
+
+A quick exploration of some features of CSS that you might not be aware of. My examples will use [SASS](http://sass-lang.com/) for the beautiful syntax, with [Bourbon](http://bourbon.io/) for vendor prefixing and shortcut methods, and Ruby, my German Shepherd, as a model.
+
+### Keyframe animations
+
+[Keyframe animations](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_animations) are a powerful way of animating DOM elements. You declare an animation using `@keyframes <name>`, and then apply it by adding `animation-name: <name>` to the element you'd like to animate.
+
+One of the simplest examples is to continously spin, which I use for loading icons instead of a GIF:
+
+```scss
++keyframes(spin)
+  0%
+    +transform(rotate(0))
+  100%
+    +transform(rotate(360deg))
+
+.spin
+  +animation(spin 1s infinite linear)
+```
+
+For example:
+
+<div class="example">
+<span class="spin">
+  Spin!
+</span>
+</div>
+
+<br>
+
+For [Biosgraphy](/projects/biosgraphy.html) I built a flipping effect for the loading butterfly, which uses CSS transforms with perspective to flip horizontally.
+
+```scss
++keyframes(flip)
+  0%
+    +transform(perspective(400px) translateZ(0) rotateY(0) scale(1))
+    +animation-timing-function(ease-out)
+
+  40%
+    +transform(perspective(400px) translateZ(150px) rotateY(170deg) scale(1))
+    +animation-timing-function(ease-out)
+
+  50%
+    +transform(perspective(400px) translateZ(150px) rotateY(190deg) scale(1))
+    +animation-timing-function(ease-in)
+
+  80%
+    +transform(perspective(400px) translateZ(0) rotateY(360deg) scale(.95))
+    +animation-timing-function(ease-in)
+
+  100%
+    +transform(perspective(400px) translateZ(0) rotateY(360deg) scale(1))
+    +animation-timing-function(ease-in)
+```
+
+For example:
+
+<div class="example">
+<span class="flip">
+  Flip!
+</span>
+</div>
+
+<br>
+
+You can trigger Javascript events when your CSS animation has finished, allowing you to chain events. For example, you could animate the close of a modal - get the modal div, add an event listener to remove the element from the DOM, then add a 'fadeOut' class.
+
+```coffeescript
+e = document.getElementById("spinner")
+e.addEventListener("animationend", on_end, false)
+e.className = "icon-spin"
+```
+
+There are also the aptly named "animationstart" and "animationiteration" events, which are triggered on the animation start and on each iteration.
+
+
+### Filters
+
+[Filters](https://developer.mozilla.org/en/docs/Web/CSS/filter) let you apply an effect to an element (usually an image), for example, converting to grayscale:
+
+```scss
+filter: grayscale(50%)
+```
+
+<div class="example">
+<img src="{% static '/images/ruby.jpg' %}" alt="Ruby grayscale" class="grayscale">
+</div>
+
+You can chain multiple filters together, and/or apply them with a CSS animation (or via a transition), for example:
+
+```scss
++keyframes(brightness)
+  0%
+    +filter(brightness(100%))
+  100%
+    +filter(brightness(200%))
+
+.filters
+  +animation(brightness 3s linear 0s infinite alternate)
+```
+
+<div class="example">
+  <img src="{% static '/images/ruby.jpg' %}" alt="Ruby filters" class="filters">
+</div>
+
+
+### Box reflection - webkit only
+
+[Box reflection](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-box-reflect) is only supported in webkit (Chrome and Safari). It looks like [element](https://developer.mozilla.org/en-US/docs/Web/CSS/element) (coming in CSS4) will be the recommended method of doing box reflections (albeit with more HTML elements) for production sites in the future.
+
+You can recreate the classic photo-gallery effect like so:
+
+```css
+-webkit-box-reflect: below 2px linear-gradient(transparent, transparent 50%, rgba(255, 255, 255, 0.4))
+```
+
+<div class="example">
+<img src="{% static '/images/ruby.jpg' %}" alt="Ruby box-reflection" class="box-reflection">
+</div>
+
+### Font features
+
+Some OpenType fonts allow for advanced control over typographic features. I'm using [Playfair Display](http://brick.im/fonts/playfairdisplay/) from [Brick](http://brick.im/).
+
+You can control ligatures (combining several letters into a single specifically designed glyph), numbers (oldstyle, proportional), automatic fractions, swashes, and more. See the [full list]((http://www.microsoft.com/typography/otspec/featurelist.htm)) of four letter codes.
+
+#### Ligatures
+
+The Glyphs panel in Illustrator is useful for viewing all the ligatures that a font supports:
+
+![Illustrator glyphs - standard ligatures](/static/images/css/illustrator_glyph1.jpg)
+
+![Illustrator glyphs - discretionary ligatures](/static/images/css/illustrator_glyph2.jpg)
+
+#### Common ligatures (liga)
+
+```scss
++font-feature-settings("liga" on)
+```
+
+<div class="example font">
+  <div class="liga">fluffily</div>  
+  <div class="no-liga">fluffily</div>  
+</div>
+
+#### Discretionary ligatures (dlig)
+
+<div class="example font">
+  <div class="dlig">The special stone</div>  
+  <div class="no-dlig">The special stone</div>  
+</div>
+
+#### Numbers
+
+##### Oldstyle figures (onum) vs lining (lnum)
+
+<div class="example font bars">
+  <span class="onum">0123456789X</span>
+  <span class="lnum">0123456789X</span>
+</div>
+
+#### Automatic fractions (frac)
+
+<div class="example font">
+  <div class="frac">1/2 of a 1/4 is an 1/8th</div>
+  <div class="no-frac">1/2 of a 1/4 is an 1/8th</div>  
+</div>
+
+#### Kerning (kern)
+
+Slight adjustments in kerning between glyph combinations (e.g. "To").
+
+<div class="example font">
+  <div class="kern">Towards refined kerning</div>
+  <div class="no-kern">Towards refined kerning</div>  
+</div>
+
+
+### Ellipsis
+
+Automatic ellipsis of single-line text in a width-constrained container. 
+
+
+### Hyphens
+
+
+
+{% endfilter %}
+{% endblock body %}
