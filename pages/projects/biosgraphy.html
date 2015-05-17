@@ -1,0 +1,43 @@
+title: Biosgraphy - the social blogging service
+date: 10-11-2014
+
+{% extends "post.html" %}
+{% block body %}
+{% filter markdown %}
+
+The largest project I worked on at [Gramercy Studios](http://gramercystudios.com) was Biosgraphy, a "social blogging service".
+
+![Biosgraphy about page screenshot](/static/images/biosgraphy/biosgraphy.jpg)
+
+The client, Tariq, came to us in mid 2013 - he envisaged a service that was about writing, with the asthetics of Pinterest and some social aspects (the ability to follow users and reshare content). We started an iterative process where Gramercy's designers (Luke and later Michael) would create prototypes in Photoshop, recieve feedback from Tariq, then refine and adjust. After we were all happy with the overall look and feel, we started development in November of 2013.
+
+I was the only full time developer to start with, initially working on setting up and building the backend API and single page web application. A few months later two part time frontend developers ([Steph](http://stephsamson.com/) and Saxon) and a full stack developer ([Ze'ev](http://zeevgilovitz.com/)) joined the team, which sped up progress significantly! We also had two iOS developers (Clement and John) working on the iPhone and iPad apps.
+
+We worked in stages of around two weeks (kind of like [scrum](http://en.wikipedia.org/wiki/Scrum_%28software_development%29) sprints, but not as strict). We would build the API endpoint(s) for a single major feature (e.g. viewing a user's profile page), then build it on the web and later on iOS. We aimed to get something functional in front of Tariq (and potential users) to recieve feedback as early as possible, rather than steaming ahead and [building something no one wants](http://paulgraham.com/startupideas.html). In the same vein, we preferred to demonstrate functionality (e.g. complex ui, animations, responsiveness) by building rather than high fidelity mockups. It's much easier to get a feel for something by playing with it than looking at a picture of what it might look like when it's built.
+
+For example, the shortcut menu gives users a quick way to write content:
+
+<iframe src="https://player.vimeo.com/video/128057260?portrait=0&byline=0&title=0&badge=0" width="250" height="305" frameborder="0"></iframe>
+
+### API
+
+Biosgraphy's API was implemented as a RESTful JSON API. This means that to create a blog you send a `POST` request to the `/blog` endpoint, and to fetch blog number 5 you send a GET request to `/blog/5`.
+
+```javascript
+{
+	"id": 5,
+	"title": "My new blog"
+}
+```
+
+We wrote the API in Python, a high level programming language which aims for [beautiful, explicit, readable](https://www.python.org/dev/peps/pep-0020/) code. We used the Django web framework as a foundation, chosen primarily for it's request handling (routes and views), ORM, authentication and sessions. We started off using Django version 1.6, then during development upgraded to 1.7 (shortly after it was released) and recently to 1.8. On top of Django we used the Django Rest Framework (DRF), a toolkit for building APIs, which adds authentication, serialisation, throttling, pagination, and more.
+
+The app is hosted on Heroku, and S3 is used for storing static assets and user uploaded media (profile pictures, cover pictures, uploaded photos and video). Static assets are served through Cloudfront, while images and video are served directly from S3. PostgreSQL (with PostGIS extensions for location data) is used as the primary data store, Redis as cache and job queue, ElasticSearch for search and autocomplete, along with a handful of other services (logging, monitoring, performance, video transcoding, emailing, CI).
+
+### Web
+
+Biosgraphy web is a single page application, developed in [Coffeescript](http://coffeescript.org) using [Backbone](http://backbonejs.org) (router and models) and [Marionette](http://marionettejs.com/) (views), packaged together using [Browserify](http://browserify.org/) and "compiled" using [Grunt](http://gruntjs.com/), with styles in [Sass](http://sass-lang.com/) and templates in [Handlebars](http://handlebarsjs.com/). Phew!
+
+
+{% endfilter %}
+{% endblock %}
