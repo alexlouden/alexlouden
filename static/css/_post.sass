@@ -89,21 +89,23 @@ article.post
     margin: 40px auto
     background: #f4f4f4
 
-  // Code and blocks
-  span.code
+  // All code
+  p > code, pre
     font-family: $code_font
-    background-color: #EEE
-    font-size: 14px
-
-  pre
-    font-family: $code_font
-    white-space: pre-wrap
-    border: 1px solid #ddd
-    padding: 20px
-    background-color: #fdfdfd
-    font-size: 14px
-    overflow: auto
+    background-color: transparentize(black, 0.96)
+    font-size: 85%
     border-radius: 3px
+
+  // Inline code
+  p > code
+    padding-top: 0.2em
+    padding-bottom: 0.2em
+
+  // Code blocks
+  pre
+    white-space: pre-wrap
+    padding: 15px
+    overflow: auto
 
   blockquote
     padding-left: 15px
