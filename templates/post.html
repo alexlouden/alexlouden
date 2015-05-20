@@ -32,6 +32,7 @@
 		
 </article>
 
+{% if prevPost or nextPost %}
 <footer class="post">
 	<span class="prev">
 		{% if prevPost %}
@@ -49,4 +50,5 @@
 		{% endif %}
 	</span>
 </footer>
+{% endif %}
 {% endblock content %}
