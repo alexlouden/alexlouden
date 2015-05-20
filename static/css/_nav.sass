@@ -11,7 +11,7 @@
   background-position: bottom center
   background-repeat: repeat-x
 
-@mixin nav_underline($colour: black, $overlap: 5px)
+@mixin nav_underline($colour: black, $overlap: 2px)
   // Link underlines
   &:after
     content: ""
@@ -19,7 +19,7 @@
     border-bottom: 1px solid $colour
     bottom: -3px // underneath
     left: -$overlap
-    right: -$overlap + 5px
+    right: -$overlap
     height: 1px
     +transition(border-color 0.1s ease-in)
 
@@ -68,21 +68,29 @@ nav
     color: $almost_black
     font-variant: small-caps
 
+    padding-left: 3px
     margin-left: 15px
     margin-right: 15px
     letter-spacing: 1px
 
     +nav_underline(transparent)
 
+    $hover_gray: tint($almost_black, 70%)
+
     &:hover
       color: $almost_black
       &:after
-        $hover_gray: tint($almost_black, 70%)
         border-color: $hover_gray
 
     &.active
       &:after
         border-color: black
+
+    &:focus
+      // Make outline even
+      padding-bottom: 3px
+      &:after
+        display: none
 
   +mobile
     // on large phones center nav for 2+2
