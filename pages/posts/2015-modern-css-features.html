@@ -193,8 +193,42 @@ Slight adjustments in kerning between glyph combinations (e.g. "To").
 
 Automatic ellipsis of single-line text in a width-constrained container. 
 
+```scss
+text-overflow: ellipsis
+white-space: nowrap // don't wrap
+overflow: hidden // don't scroll
+width: 50% // or max-width
+```
+
+<div class="example">
+  <div class="ellipsis">
+    This is a very long sentence which will be cut off
+  </div>
+</div>
 
 ### Hyphens
+
+Adjust hyphenation, rather than relying on the browser's default behaviour. Not currently supported in Chrome (43), Opera or Android browser - see the [firefox screenshot](/static/images/css/hyphens.png).
+
+```scss
++hyphens(manual) // auto or none
+```
+
+```html
+hyphenation hyphen&shy;ation
+```
+
+You can force no hyphenation with `none` so long words get wrapped:
+
+<div class="example hyphens none">hyphenation hyphe&shy;nation</div>
+
+Rely on the browser to hyphenate appropriately with `auto`. You can suggest places with `&shy;` characters, but the browser may do it's own thing.
+
+<div class="example hyphens auto">hyphenation hyphe&shy;nation</div>
+
+Or reply on manual hyphenation completely, _only_ at `&shy;` characters.
+
+<div class="example hyphens manual">hyphenation hyphe&shy;nation</div>
 
 
 

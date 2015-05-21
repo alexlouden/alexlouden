@@ -117,3 +117,45 @@
     +font-feature-settings("kern" on)
   .no-kern
     +font-feature-settings("kern" off)
+
+  // Ellipsis
+  +keyframes(vary-width)
+    0%
+      max-width: 100px
+    10%
+      max-width: 100px
+    90%
+      max-width: 350px
+    100%
+      max-width: 350px
+
+  .ellipsis
+    padding: 5px
+    border-radius: 3px
+    border: 1px solid transparentize(black, 0.7)
+    line-height: 1.5
+    text-overflow: ellipsis
+    white-space: nowrap
+    overflow: hidden
+    +animation(vary-width ease-in 4s infinite alternate)
+
+  // Hyphens
+  &.hyphens
+    width: 140px
+    font-size: 30px
+    font-family: "Playfair Display"
+    line-height: 1
+
+    padding: 5px
+    border-radius: 3px
+    border: 1px solid transparentize(black, 0.7)
+    margin-top: -10px
+    margin-bottom: 15px
+
+    &.auto
+      +hyphens(auto)
+    &.none
+      +hyphens(none)
+    &.manual
+      +hyphens(manual)
+
