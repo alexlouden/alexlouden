@@ -1,4 +1,4 @@
-title: Modern CSS features in 2015
+title: Underappreciated CSS features by example
 date: 26-04-2015
 
 {% extends "post.html" %}
@@ -12,7 +12,9 @@ date: 26-04-2015
 
 {% filter markdown %}
 
-A quick exploration of some features of CSS that you might not be aware of. My examples will use [SASS](http://sass-lang.com/) for the beautiful syntax, with [Bourbon](http://bourbon.io/) for vendor prefixing and shortcut methods, and Ruby, my German Shepherd, as a model.
+A quick exploration of a handful of underappreciated CSS features. I've tried to choose practical examples where possible to demonstrate each feature's full capabilities.
+
+My examples will use [SASS](http://sass-lang.com/) for the beautiful syntax, with [Bourbon](http://bourbon.io/) for vendor prefixing and shortcut methods, and Ruby, my German Shepherd, as a model.
 
 ### Keyframe animations
 
@@ -131,6 +133,7 @@ You can recreate the classic photo-gallery effect like so:
 <img src="{% static '/images/ruby.jpg' %}" alt="Ruby box-reflection" class="box-reflection">
 </div>
 
+
 ### Font features
 
 Some OpenType fonts allow for advanced control over typographic features. I'm using [Playfair Display](http://brick.im/fonts/playfairdisplay/) from [Brick](http://brick.im/).
@@ -181,7 +184,7 @@ The Glyphs panel in Illustrator is useful for viewing all the ligatures that a f
 
 #### Kerning (kern)
 
-Slight adjustments in kerning between glyph combinations (e.g. "To").
+Slight adjustments in kerning between glyph combinations (e.g. "To") - above is with `kern` on, below is the default behaviour.
 
 <div class="example font">
   <div class="kern">Towards refined kerning</div>
@@ -206,9 +209,10 @@ width: 50% // or max-width
   </div>
 </div>
 
+
 ### Hyphens
 
-Adjust hyphenation, rather than relying on the browser's default behaviour. Not currently supported in Chrome (43), Opera or Android browser - see the [firefox screenshot](/static/images/css/hyphens.png).
+Adjust hyphenation, rather than relying on the browser's default behaviour. Not currently supported in Chrome, Opera or Android browser - see the [firefox screenshot](/static/images/css/hyphens.png).
 
 ```scss
 +hyphens(manual) // auto or none
@@ -226,10 +230,9 @@ Rely on the browser to hyphenate appropriately with `auto`. You can suggest plac
 
 <div class="example hyphens auto">hyphenation hyphe&shy;nation</div>
 
-Or reply on manual hyphenation completely, _only_ at `&shy;` characters.
+Or reply on `manual` hyphenation completely, _only_ at `&shy;` characters.
 
 <div class="example hyphens manual">hyphenation hyphe&shy;nation</div>
-
 
 
 {% endfilter %}
