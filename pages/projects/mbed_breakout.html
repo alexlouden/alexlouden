@@ -1,0 +1,38 @@
+title: mbed Business Card Breakout Board
+author: Alex Louden
+date: 26-05-2011
+
+{% extends "post.html" %}
+{% block body %}
+
+{% filter markdown %}
+
+A business card sized breakout board for the [mbed microcontroller](mbed.org).
+
+[![breakout board](/static/images/mbed_breakout/pcb_populated_sm.jpg)](/static/images/mbed_breakout/pcb_populated.jpg)
+
+The board has the following functionality broken out:
+
+[![breakout board](/static/images/mbed_breakout/pcb_illustrated_sm.jpg)](/static/images/mbed_breakout/pcb_illustrated.jpg)
+
+---
+
+I also built an addon board, designed for use with a 6 axis servo robot arm.
+
+[![breakout board](/static/images/mbed_breakout/pcb_top_populated_sm.jpg)](/static/images/mbed_breakout/pcb_top_populated.jpg)
+
+This board contains:
+
+- 6x PWM control pins for driving servos
+- 6V supply with a large capacitor for current smoothing
+- XBee for wireless control
+- USB host for storage
+
+---
+
+mbed have [continued the trend](https://developer.mbed.org/blog/entry/On-the-mbed-Whiteboard/), and are now producing a similar form factor [application board](https://www.sparkfun.com/products/11695).
+
+[![breakout board](/static/images/mbed_breakout/mbed_application_board.jpg)](/static/images/mbed_breakout/mbed_application_board.jpg)
+
+{% endfilter %}
+{% endblock %}
