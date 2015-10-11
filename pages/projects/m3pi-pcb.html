@@ -1,0 +1,19 @@
+title: mbed 3pi Robot Expansion Board
+author: Alex Louden
+date: 12-09-2010
+
+{% extends "post.html" %}
+{% block body %}
+
+{% filter markdown %}
+
+An addon PCB for using the [mbed microcontroller](http://mbed.org) to control Pololu's [3pi robot](https://www.pololu.com/product/975). This was built for a university project to add position and orientation sensors to the 3pi robot.
+
+[![breakout board](/static/images/3pi/mounted_sm.jpg)](/static/images/3pi/mounted.jpg)
+
+---
+
+Chris from mbed has kindly taken my rough eagle schematic and built an Eagle library from it - available for download [here](https://developer.mbed.org/media/uploads/chris/3pi.zip). mbed and Pololu have since collaborated to build the [m3pi](https://www.pololu.com/docs/0J48/all) - an addon board with prototyping space, a mbed socket, USB host, XBee and more.
+
+{% endfilter %}
+{% endblock %}
