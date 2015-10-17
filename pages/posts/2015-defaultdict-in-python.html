@@ -1,0 +1,201 @@
+title: Python's defaultdict
+date: 17-10-2015
+
+{% extends "post.html" %}
+{% block body %}
+
+{% filter markdown %}
+
+One of my favourite datatypes in Python is the [`defaultdict`](https://docs.python.org/2/library/collections.html#collections.defaultdict). It behaves like a normal Python dictionary, except when a key isn't present it'll substitute in a default value rather than raising a `KeyError`.
+
+For example, we can count the number of words in the dictionary that start with each letter:
+
+```python
+# Load the OSX built-in dictionary
+with open('/usr/share/dict/words', 'r') as f:
+    words = f.read().splitlines()
+```
+
+Without using `defaultdict`, we need to check if our letter has been assigned yet before we can add `1`.
+```python
+d = {}
+for word in words:
+    firstletter = word[0].lower()
+    if firstletter not in d:
+        d[firstletter] = 0
+    d[firstletter] += 1
+```
+
+This gives us the following result - we can see that words starting with the letter `S`, `P` and `C` are the most common.
+
+```python
+{'a': 17096,
+ 'b': 11070,
+ 'c': 19901,
+ 'd': 10896,
+ 'e': 8736,
+ 'f': 6860,
+ 'g': 6861,
+ 'h': 9027,
+ 'i': 8799,
+ 'j': 1642,
+ 'k': 2281,
+ 'l': 6284,
+ 'm': 12616,
+ 'n': 6780,
+ 'o': 7849,
+ 'p': 24461,
+ 'q': 1152,
+ 'r': 9671,
+ 's': 25162,
+ 't': 12966,
+ 'u': 16387,
+ 'v': 3440,
+ 'w': 3944,
+ 'x': 385,
+ 'y': 671,
+ 'z': 949}
+```
+
+We can replicate this behaviour with `defaultdict`, by creating a `defaultdict` with the default value set to `int`.
+
+```python
+from collections import defaultdict
+d = defaultdict(int)
+```
+
+Now when we try and retrieve a value that doesn't exist we'll be returned 0 instead (the value you get when you construct a new `int`)
+```python
+print d['test']
+# 0
+
+print d
+# defaultdict(<type 'int'>, {'test': 0})
+```
+
+We can also assign new values (and the same as `dict`, they don't have to be the same type):
+
+```python
+d['a'] = 5
+d['b'] += 10
+d['c'] = 'Something different'
+
+print d
+# defaultdict(<type 'int'>, {'a': 5, 'c': 'Something different', 'b': 10})
+```
+
+Now our example above becomes the following - much more concise.
+```python
+d = defaultdict(int)
+for word in words:
+    firstletter = word[0].lower()
+    d[firstletter] += 1
+```
+
+Another useful `defaultdict` default value is `list` - this creates an empty list and allows you to append elements to it without having to initialise each empty list. This is useful for categorising objects based on some shared value (the dictionary key).
+
+We can use this as an efficient way to find anagrams in the dictionary - words that are anagrams are the same when sorted alphabetically (for example `alert` and `later` when sorted are `aelrt`).
+
+```python
+d = defaultdict(list)
+for word in words:
+    sorted_word = ''.join(sorted(word))
+    d[sorted_word].append(word)
+```
+
+Now we can see all the anagrams of `alert`:
+```python
+print d['aelrt']
+# ['alert', 'alter', 'artel', 'later', 'ratel', 'taler', 'telar']
+```
+
+To find the words with the most anagrams, we can convert our dictionary into a list (of lists of anagrams) and sort it by the number of elements (in descending order, hence the `reverse` flag). Then we'll print out the first 10 lists of anagrams:
+
+```python
+anagrams = sorted(d.values(), key=len, reverse=True)
+print anagrams[:10]
+```
+
+```python
+[['ester', 'estre', 'reest', 'reset', 'steer', 'stere', 'stree', 'terse', 'tsere'],
+ ['angor', 'argon', 'goran', 'grano', 'groan', 'nagor', 'orang', 'organ', 'rogan'],
+ ['caret', 'carte', 'cater', 'crate', 'creat', 'creta', 'react', 'recta', 'trace'],
+ ['leapt', 'palet', 'patel', 'pelta', 'petal', 'plate', 'pleat', 'tepal'],
+ ['laster', 'lastre', 'rastle', 'relast', 'resalt', 'salter', 'slater', 'stelar'],
+ ['dater', 'derat', 'detar', 'drate', 'rated', 'trade', 'tread'],
+ ['easting', 'gainset', 'genista', 'ingesta', 'seating', 'signate', 'teasing'],
+ ['darter', 'dartre', 'redart', 'retard', 'retrad', 'tarred', 'trader'],
+ ['least', 'setal', 'slate', 'stale', 'steal', 'stela', 'tales'],
+ ['atle', 'laet', 'late', 'leat', 'tael', 'tale', 'teal']]
+```
+
+Rather than using all 235,886 words in the OS X dictionary (which includes uncommon words like tael and tsere), we can download [a list](https://github.com/first20hours/google-10000-english) of 10,000 common english words and run the full code:
+
+```python
+from collections import defaultdict
+
+with open('/Users/alex/Desktop/google-10000-english.txt', 'r') as f:
+    common_words = f.read().splitlines()
+
+d = defaultdict(list)
+for word in common_words:
+    sorted_word = ''.join(sorted(word))
+    d[sorted_word].append(word)
+
+anagrams = sorted(d.values(), key=len, reverse=True)
+```
+
+And to format the output nicely:
+
+```python
+for anagram in anagrams[:30]:
+    print ', '.join(anagram)
+```
+
+```
+isp, psi, sip, ips
+per, pre, rep, erp
+team, meat, meta, mate
+edit, diet, tied, tide
+step, pets, sept, pest
+post, stop, spot, tops
+this, hits, hist, shit
+care, race, acer, acre
+spa, asp, sap, pas
+corp, crop, proc
+later, alert, alter
+sir, sri, irs
+read, dear, dare
+lead, deal, dale
+garden, danger, grande
+weird, wired, wider
+mac, cam, acm
+cast, acts, cats
+cup, cpu, upc
+early, layer, relay
+are, era, ear
+panel, plane, nepal
+notes, stone, tones
+aim, mai, mia
+ages, sage, sega
+mar, ram, arm
+pool, loop, polo
+center, recent, centre
+mode, demo, dome
+lost, lots, slot
+```
+
+---
+
+In addition to `list` and `int`, you can use most Python data types - e.g. `float`, `set`, `dict` and `str` as the `defaultdict` default value. For a non-zero constant value, you can use a function or a lambda:
+
+```python
+d = defaultdict(lambda: 5)
+print d['a']
+# 5
+```
+
+Have a play and [let me know what you think](twitter.com/alexlouden)!
+
+{% endfilter %}
+{% endblock body %}
