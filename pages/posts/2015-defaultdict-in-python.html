@@ -65,7 +65,7 @@ from collections import defaultdict
 d = defaultdict(int)
 ```
 
-Now when we try and retrieve a value that doesn't exist we'll be returned 0 instead (the value you get when you construct a new `int`)
+Now when we try and retrieve a value that doesn't exist we'll be returned 0 instead (the value you get when you construct a new `int`).
 ```python
 print d['test']
 # 0
@@ -74,7 +74,7 @@ print d
 # defaultdict(<type 'int'>, {'test': 0})
 ```
 
-We can also assign new values (and the same as `dict`, they don't have to be the same type):
+We can also assign new values (they can be any type - same behaviour as a normal `dict`):
 
 ```python
 d['a'] = 5
@@ -196,7 +196,7 @@ print d['a']
 # 5
 ```
 
-Have a play and [let me know what you think](twitter.com/alexlouden)!
+Have a play and [let me know what you think](https://twitter.com/alexlouden)!
 
 {% endfilter %}
 {% endblock body %}
