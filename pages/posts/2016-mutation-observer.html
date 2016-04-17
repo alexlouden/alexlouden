@@ -1,0 +1,95 @@
+title: Mutation Observers
+date: 16-04-2016
+description: Working with MutationObservers in Javascript
+
+{% extends "post.html" %}
+{% block body %}
+
+{% filter markdown %}
+
+On a recent project, the client was using a 3rd party Javascript widget which injected a HTML table of accommodation prices into the webpage. The table was ugly and verbose, and the client wanted a simpler, more modern representation.
+
+There was no JSON API to get the equivalent data and no way to modify the widget's structure (e.g. by overriding a template). The solution I came up with was to catch the table as it appeared in the DOM, and modify it in situ. There are a few different ways of figuring out when an element has been added to the DOM - polling, mutation events and MutationObservers.
+
+### Polling
+
+A quick solution is to keep checking the DOM to see if the table exists, but if you poll very quickly it can slow down the user's browser, and if you poll slowly there'll be a delay between the table appearing and you finding out about it. I wanted to minimise the delay as much as possible, so that the user could see the accommodation prices as soon as possible and avoid a visible flicker as the table content changed.
+
+```javascript
+var modify_table = function(){
+
+    // If table doesn't exists
+    if (!document.getElementByID('table')){
+        // Check again in 100ms
+        setTimeout(modify_table, 100);
+    });
+
+    // Modify table
+    modifyTable();
+}
+
+// On page load wait 300ms then check
+setTimeout(modify_table, 300);
+```
+
+### Mutation Events
+
+A better solution is to use an event - [Mutation Events](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Mutation_events) *were* the way to catch when nodes were inserted/modified/removed from the DOM, but they had a major [performance penalty](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Mutation_events#Performance), and have been deprecated in favour of `MutationObservers`. This allowed you to listen to the element's parent (or any ancestor) for the `DOMNodeInserted` event, and then check each `MutationEvent` to see if the element you're interested in has been added.
+
+```javascript
+var tableParent = document.getElementByID("tableParent")
+tableParent.addEventListener("DOMNodeInserted", function (ev) {
+    // Check ID of node inserted
+    if (ev.target.id === "table") {
+        // Modify table
+        modifyTable();
+    }
+}, false);
+```
+
+### MutationObserver API
+
+So finally, the modern and recommended way of achieving this is to use a [`MutationObserver`](https://developer.mozilla.org/en/docs/Web/API/MutationObserver). `Mutation Observers` have a similar API to `Mutation Events` - you listen to a parent or ancestor, and get notified when one or more of the following properties has changed: `attributes`, `childList` and/or `characterData`. However, instead of the callback triggering on each event, it aggreggates and gives you a list of [`Mutations`](https://developer.mozilla.org/en-US/docs/Web/API/MutationRecord) with lists of [`Nodes`](https://developer.mozilla.org/en-US/docs/Web/API/Node) you can iterate through to determine if the `Node` you're interested in has been added (or modified/removed).
+
+In this case I couldn't listen to just the parent element, because that was dynamically created by the widget too, so I listened to an ancestor, which is why I'm observing `subtree` as well as `childList`.
+
+```javascript
+var tableObserver;
+var callback = function(mutations){
+
+    // look through all mutations that have just occurred
+    for (var i = 0; i < mutations.length; i++){
+
+        // look through all added nodes of this mutation
+        for (var j = 0; j < mutations[i].addedNodes.length; j++){
+
+            var node = mutations[i].addedNodes[j];
+
+            // Only interested in Elements that are created
+            // And if they have the ID we're looking for
+            if ((node.nodeType === Node.ELEMENT_NODE) && (node.id === "table")){
+
+                // Modify table
+                modifyTable();
+
+                // Optional: Stop observing and return
+                tableObserver.disconnect();
+                return;
+            }
+        }
+    }
+}
+tableObserver = new MutationObserver(callback);
+var tableParent = document.getElementByID("tableParent")
+tableObserver.observe(tableParent, {
+    childList: true,
+    subtree: true
+});
+```
+
+As with many things in the Javascript world, the Mutation Observer API isn't supported in all browsers, so you should use [a polyfill](https://github.com/webcomponents/webcomponentsjs) if you're targeting IE9/10 users.
+
+Have a play and [let me know what you think](https://twitter.com/alexlouden)!
+
+{% endfilter %}
+{% endblock body %}
