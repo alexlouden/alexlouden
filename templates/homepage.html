@@ -33,7 +33,7 @@
     <h1 id="posts">Posts</h1>
     <ul>
       {% for post in posts %}
-      <li> 
+      <li>
         <a href='/{{ post.path }}'>
           <aside class="dates">{{ post.date|date:"F Y" }}</aside>
           {{ post.title }}
@@ -51,7 +51,7 @@
     <h1 id="projects">Projects</h1>
     <ul>
       {% for project in projects %}
-      <li> 
+      <li>
         <a href='/{{ project.path }}'>
           <aside class="dates">{{ project.date|date:"F Y" }}</aside>
           {{ project.title }}
@@ -68,7 +68,7 @@
   <div class="content">
     <span class="logo">{% include 'logo.svg' %}</span>
     <h3>Alex Louden</h3>
-    
+
     <div class="details">
       {% block details %}{% endblock %}
     </div>

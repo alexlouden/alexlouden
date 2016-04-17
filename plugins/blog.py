@@ -1,5 +1,6 @@
 import datetime
 import logging
+from urlparse import urljoin
 
 from django.template import Context
 from django.template.loader import get_template
@@ -12,7 +13,9 @@ Global["config"]["path"] = "posts"
 Global["config"]["date_format"] = "%d-%m-%Y"
 Global["config"]["post_body_block"] = "body"
 
-by_date = lambda x: x.get("date")
+
+def by_date(x):
+    return x.get("date")
 
 
 def preBuild(site):
@@ -34,7 +37,7 @@ def preBuild(site):
         else:
             continue
 
-        context = parse_page(page)
+        context = parse_page(site, page)
         Global[article_type].append(context)
 
     # Sort the posts by date and add the next and previous page indexes
@@ -50,7 +53,7 @@ def preBuild(site):
             Global["posts"][i]['nextPost'] = Global["posts"][i - 1]
 
 
-def parse_page(page):
+def parse_page(site, page):
 
     context = page.context()
     context_post = {"path": page.path}
@@ -58,7 +61,7 @@ def parse_page(page):
     # Check if we have the required keys
     for field in ["title", "date"]:
 
-        if not field in context:
+        if field not in context:
             logging.warning("Page %s is missing field: %s" % (page.path, field))
         else:
             if field == "date":
@@ -66,6 +69,10 @@ def parse_page(page):
                 context_post[field] = parse_date(context[field], page.path)
             else:
                 context_post[field] = context[field]
+
+    # Absolute URL for twitter card image
+    if "image" in context and context["image"]:
+        context_post["image"] = urljoin(site.url, context["image"])
 
     # Temp post context
     temp_post_context = Context(context)
