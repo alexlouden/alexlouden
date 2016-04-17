@@ -3,5 +3,5 @@
     "aws-bucket-name": "alexlouden.com",
     "aws-bucket-website": "alexlouden.com.s3-website-us-east-1.amazonaws.com",
     "port": 8463,
-    "site-url": "http://alexlouden.com/"
+    "site-url": "https://alexlouden.com/"
 }
