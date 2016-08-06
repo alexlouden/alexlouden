@@ -1,0 +1,49 @@
+title: Using git bisect with Django
+date: 5-06-2016
+description: Find when a Django unit test broke automatically
+
+{% extends "post.html" %}
+{% block body %}
+
+{% filter markdown %}
+
+So, you've just come back from holiday. A huge feature branch with hundreds of commits has been merged to develop, and your unit test is failing. You're not sure what has broken it - there are lots of model, view and library changes, and you don't want to spend the next week reading through commits to figure out what's broken.
+
+Enter [git bisect](https://git-scm.com/docs/git-bisect) - a tool built into git which helps you find which commit introduced a bug.
+
+You start by running `git bisect start`, and then telling bisect that the currently checked out commit is bad with `git bisect bad`.
+
+```bash
+git bisect start
+git bisect bad
+```
+
+Then you find a commit which you know is good, for example the latest tagged release. You can use either a commit hash, branch or tag name.
+
+```bash
+git bisect good v2.1
+```
+
+Now, you simply tell git how to run the unit test you're interested in with the following syntax:
+
+```bash
+git bisect run python manage.py test project.tests.TestClass.test_name --noinput
+```
+
+Or if you're using [`nose`](http://nose.readthedocs.io/en/latest/) this looks like:
+
+```bash
+git bisect run python manage.py test project.tests.test_filename:TestClass.test_name --noinput
+```
+
+Then git bisect does it's magic, performing binary search from your current commit to the broken one, eventually pinpointing which commit introduced the bug.
+
+    0b5c07c is the first bad commit
+
+
+Then you can check out this commit, read through what changed, fix it, and take the rest of the week off!
+
+Have a play and [let me know what you think](https://twitter.com/alexlouden)!
+
+{% endfilter %}
+{% endblock body %}
