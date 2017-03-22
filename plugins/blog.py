@@ -67,7 +67,7 @@ def preBuild(site):
 def parse_page(site, page):
 
     context = page.context()
-    context_post = {"path": '/' + page.final_url}
+    context_post = {"path": page.final_url}
 
     # Check if we have the required keys
     for field in ["title", "date"]:

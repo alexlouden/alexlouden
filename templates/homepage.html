@@ -34,7 +34,7 @@
     <ul>
       {% for post in posts %}
       <li>
-        <a href='/{{ post.path }}'>
+        <a href='{{ post.path }}'>
           <aside class="dates">{{ post.date|date:"F Y" }}</aside>
           {{ post.title }}
         </a>
@@ -51,7 +51,7 @@
     <ul>
       {% for project in projects %}
       <li>
-        <a href='/{{ project.path }}'>
+        <a href='{{ project.path }}'>
           <aside class="dates">{{ project.date|date:"F Y" }}</aside>
           {{ project.title }}
         </a>
