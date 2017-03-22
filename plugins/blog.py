@@ -6,6 +6,17 @@ from django.template import Context
 from django.template.loader import get_template
 from django.template.loader_tags import BlockNode, ExtendsNode
 
+# Monkeypatch
+from cactus import static
+from cactus.utils.file import calculate_file_checksum
+
+
+def shorter_checksums(path):
+    return calculate_file_checksum(path)[:7]
+
+
+static.calculate_file_checksum = shorter_checksums
+
 
 Global = {"config": {}, "posts": [], "projects": []}
 
@@ -56,7 +67,7 @@ def preBuild(site):
 def parse_page(site, page):
 
     context = page.context()
-    context_post = {"path": page.path}
+    context_post = {"path": '/' + page.final_url}
 
     # Check if we have the required keys
     for field in ["title", "date"]:
