@@ -1,0 +1,115 @@
+title: Everything AWS
+date: 22-03-2017
+description: Static site hosting, SSL and hosted email with AWS
+
+{% extends "post.html" %}
+{% block body %}
+
+{% filter markdown %}
+
+I'm starting a new project and I'd like to try using AWS for everything - buying the domain, hosting the static site, email hosting and handing SSL certificates. In theory this is a good way to simplify management and billing - it should be easier than configuring a bunch of separate services, right?
+
+These are the steps involved:
+
+[TOC]
+
+---
+
+AWS is made up of a bunch of services - today my AWS console shows 71 in total, from Athena to X-Ray (and I've no idea what either one does). In this walkthrough we'll use the following:
+
+**<img src="{% static "images/aws/route53.svg" %}" class="aws-icon"> Route53 (DNS)**
+
+**<img src="{% static "images/aws/s3.svg" %}" class="aws-icon"> S3 (Simple Storage Service)**
+
+**<img src="{% static "images/aws/cloudfront.svg" %}" class="aws-icon"> CloudFront (CDN)**
+
+**<img src="{% static "images/aws/acm.svg" %}" class="aws-icon"> ACM (AWS Certificate Manager - SSL)**
+
+**<img src="{% static "images/aws/workmail.svg" %}" class="aws-icon"> WorkMail (hosted email service)**
+
+**<img src="{% static "images/aws/ses.svg" %}" class="aws-icon"> SES (Simple Email Service)**
+
+**<img src="{% static "images/aws/iam.svg" %}" class="aws-icon"> IAM (Identity and Access Management)**
+
+I'm trying out WorkMail (Amazon's hosted email service) for the first time - it's $4/user/month, which is slightly cheaper than Google Apps at $5/user/month. It's still pretty new - Amazon have only just released support for IMAP at the end of last year, and the dashboard is pretty simple compared to the Google Admin Console.
+
+I'm buying an Australian domain - `mctx.com.au`, so a few steps here might not apply to you, depending on the domain you're buying.
+
+### Step 1 - buy the domain from Route53
+
+On the Route53 dashboard there's a search box to register new domains - `.com` domains are $12/year, and `.com.au` domains are $15/year, available 2 years at a time. To buy more than one year at a time, add the domain to your cart and then choose how many years you'd like to register it for.
+
+![Route53 dashboard]({% static "images/aws/register_domain.png" %})
+
+After you've entered all your registrant details, you can choose whether to enable domain privacy. For `.com.au` domains you also have to enter an Australian business ID number (either an ABN, ACN, BRN, or trademark registration number) and you don't get the option of domain privacy (although phone numbers and email addresses are hidden from whois queries).
+
+### Step 2 - setting up S3 for website hosting
+
+I'm using a static website - so instead of logging onto e.g. Wordpress and editing a live site, I actually created the website on [Codepen.io](http://codepen.io/alexlouden/pen/vxdOVv) using HTML/Babel/Sass and downloaded a compiled zip file.
+
+My blog (the site you're reading) is written locally in Markdown/Coffeescript/Sass, and then I use a static site generator called [Cactus](https://github.com/eudicots/Cactus) to generate a folder of HTML/JS/CSS. There are some really good options - [Jekyll](https://jekyllrb.com/) is probably the most popular (used by [Github Pages](https://pages.github.com/)). My blog is [open source](https://github.com/alexlouden/alexlouden) so if you're interested you can see how it's built.
+
+First up we need to create an S3 bucket - a place to store our files. S3 bucket names need to be globally unique, so I tend to name my bucket the domain name of the website I'm creating. In this case, I'll call my bucket `mctx.com.au`:
+
+![S3 bucket creation]({% static "images/aws/create_bucket.png" %})
+
+It doesn't really matter what region you create the bucket in - I use Sydney since that's the closest to me geographically (I might get a slightly faster upload speed?). We don't need any special bucket properties or permissions, so you can click Next a few times to complete the wizard. Then you can upload files by entering the bucket (by clicking on it's name) and clicking the Upload button. I simply dragged and dropped the contents of my compiled website folder:
+
+[![S3 bucket contents]({% static "images/aws/bucket_listing.png" %})]({% static "images/aws/bucket_listing.png" %})
+
+The next step is to select all the files and folders inside the bucket, and make them public:
+
+![S3 bucket public]({% static "images/aws/bucket_public.png" %})
+
+Next up in the Properties tab we choose "Static website hosting" - this puts our site live! You should click the link (in my case [http://mctx.com.au.s3-website-ap-southeast-2.amazonaws.com/](http://mctx.com.au.s3-website-ap-southeast-2.amazonaws.com/)) to verify that your website works correctly and there aren't any errors in the Chrome Developer Tools Console.
+
+![S3 static site settings]({% static "images/aws/static_site_hosting.png" %})
+
+### Step 3 - creating a Cloudfront distribution
+
+[Cloudfront](https://aws.amazon.com/cloudfront/details/) is a content distribution network (CDN) - a global network of servers in around 50 locations around the world. The idea is that these edge servers cache a copy of your website, and if someone from New York wants to read your website then they send requests from their closest edge server (which happens to be also in New York). If the server has a copy of the file then it returns it's cached copy (called a "cache hit"), otherwise it fetches it from the S3 website, returns it to the user and then caches it for next time.
+
+Hit the blue "Create Distribution" button on the Cloudfront dashboard, choose a Web distribution, and paste your S3 website URL into the "Origin Domain Name" box. I like to enable "Redirect HTTP to HTTPS", and "Compress Objects Automatically".
+
+[![Cloudfront creation settings]({% static "images/aws/cloudfront_create1.png" %})]({% static "images/aws/cloudfront_create1.png" %})
+
+The next section of the page asks about [Price Class](https://aws.amazon.com/cloudfront/pricing/#price-classes) - which regions to enable Cloudfront in for this distribution. I choose Price Class All because the other classes don't include Australia, but if you can choose another set of regions if you wanted to save money or your customers are US/Europe only and you don't need edge servers in Asia/Australia.
+
+By default a Cloudfront distribution has a URL like `[d1slj74s5hsooo.cloudfront.net](https://d1slj74s5hsooo.cloudfront.net)`. Since we'd like to use the domain we've just bought, enter that under "Alternate Domain Names". I leave off `www.mctx.com.au` - we'll set up a redirect later, as it's best practice to have a single canonical domain. I also enable [HTTP/2](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Evolution_of_HTTP#HTTP2_–_A_protocol_for_greater_performance) for improved performance and IPv6.
+
+[![Cloudfront creation settings 2]({% static "images/aws/cloudfront_create2.png" %})]({% static "images/aws/cloudfront_create2.png" %})
+
+In the screenshot above I've already created an SSL certificate, but since you won't have one at this stage yet then you'll need to hit the "Request or Import a Certificate with ACM" button and head to the next step before creating your distribution.
+
+### Step 4 - getting an SSL certificate
+
+The button on the Cloudfront distribution will have taken you to the [ACM wizard](https://console.aws.amazon.com/acm/home?region=us-east-1#/wizard/). Enter the domain names you'd like your site to be available at. I've included `*.mctx.com.au` so that I can use the same SSL certificate to handle redirects from `https://www.`.
+
+[![ACM domains]({% static "images/aws/acm_domains.png" %})]({% static "images/aws/acm_domains.png" %})
+
+The next step in the process is to [validate](http://docs.aws.amazon.com/acm/latest/userguide/gs-acm-validate.html) that we own the domains listed. ACM currently does that by sending an email to the email addresses available in your whois, and to `admin@your_domain`, `administrator`, `hostmaster`, `postmaster` and `webmaster`. If you've chosen a wildcard (`*`) or `www` domain then the email goes to the root domain, otherwise it goes to `admin@subdomain.your_domain`.
+
+This seems like a rather redundant process considering that we've just bought the domain through AWS, but rules are rules.
+
+Since I registered an Australian domain my email isn't available via whois, so I have to set up email hosting for admin@mctx.com.au before we can click "Confirm and request". If you've entered a different email address and you don't have whois privacy then you can continue with the verification process (and skip email hosting completely if you like!).
+
+If you want a different type of SSL certificate (e.g. an EV SSL Certificate for the green bar and your company name shown in the address bar), then you can buy one and [import it](https://console.aws.amazon.com/acm/home?region=us-east-1#/importwizard/) into ACM instead.
+
+### Step 5 - getting started with WorkMail
+
+Not unlike the rest of AWS, WorkMail's dashboard is very utilitarian and comes across as targeted at large enterprises - the first step to create an Organisation asks whether you'd like a quick setup (10 minutes) or a custom setup, which mentions enterprisey terms such as "mobile device policies", "active directory" and "data encryption keys". A custom setup allows for connecting to an on-premises Active Directory, and for creating a customer master key in AWS KMS (Key Management Service). Yum!
+
+Since I only want a single email address, I don't have an on-premises AD and I don't want to accidentally wipe my phone with a mobile device policy, I opted for the Quick setup - the only thing it asks for is an organisation name:
+
+[![WorkMail quick setup]({% static "images/aws/workmail_org_name.png" %})]({% static "images/aws/workmail_org_name.png" %})
+
+I chose my organisation name (`mctx`), and then the
+
+...
+
+---
+
+
+{% endfilter %}
+
+{% endblock body %}
