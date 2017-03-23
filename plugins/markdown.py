@@ -15,11 +15,9 @@ print 'hello'!
 </code></pre>
 
 """
-import sys
-sys.path.insert(1, '/usr/local/lib/python2.7/site-packages')
-
 from markdown import markdown
 from markdown.extensions.fenced_code import FencedCodeExtension, FencedBlockPreprocessor
+from markdown.extensions.toc import TocExtension
 
 from cactus.template_tags import register
 
@@ -46,7 +44,8 @@ def mymarkdown(content):
     return markdown(
         content,
         extensions=[
-            PrismCodeExtension()
+            PrismCodeExtension(),
+            TocExtension()
         ]
     )
 
