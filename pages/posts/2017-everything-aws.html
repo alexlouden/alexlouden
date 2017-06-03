@@ -93,22 +93,61 @@ This seems like a rather redundant process considering that we've just bought th
 
 Since I registered an Australian domain my email isn't available via whois, so I have to set up email hosting for admin@mctx.com.au before we can click "Confirm and request". If you've entered a different email address and you don't have whois privacy then you can continue with the verification process (and skip email hosting completely if you like!).
 
-If you want a different type of SSL certificate (e.g. an EV SSL Certificate for the green bar and your company name shown in the address bar), then you can buy one and [import it](https://console.aws.amazon.com/acm/home?region=us-east-1#/importwizard/) into ACM instead.
+If you already have an SSL certificate, or if you want to buy a different type (e.g. an EV Certificate for the green address bar with your company name), then you can [import it](https://console.aws.amazon.com/acm/home?region=us-east-1#/importwizard/) into ACM instead.
 
 ### Step 5 - getting started with WorkMail
 
-Not unlike the rest of AWS, WorkMail's dashboard is very utilitarian and comes across as targeted at large enterprises - the first step to create an Organisation asks whether you'd like a quick setup (10 minutes) or a custom setup, which mentions enterprisey terms such as "mobile device policies", "active directory" and "data encryption keys". A custom setup allows for connecting to an on-premises Active Directory, and for creating a customer master key in AWS KMS (Key Management Service). Yum!
+Not unlike the rest of AWS, WorkMail's dashboard is very utilitarian and comes across as targeted at large enterprises - the first step to create an Organisation asks whether you'd like a quick setup or a custom setup, which mentions enterprisey terms such as "mobile device policies", "active directory" and "data encryption keys". A custom setup allows for connecting to an on-premises Active Directory, and for creating a customer master key in AWS KMS (Key Management Service). Yum!
 
 Since I only want a single email address, I don't have an on-premises AD and I don't want to accidentally wipe my phone with a mobile device policy, I opted for the Quick setup - the only thing it asks for is an organisation name:
 
 [![WorkMail quick setup]({% static "images/aws/workmail_org_name.png" %})]({% static "images/aws/workmail_org_name.png" %})
 
-I chose my organisation name (`mctx`), and then the
+I chose my organisation name (`mctx`), and then I'm taken to this page:
 
-...
+
+
+
+
+Existing users, and System groups (e.g. "Incoming Forest Trust Builders")
 
 ---
 
+
+### Other steps
+
+
+Cloudfront
+- set up (origin s3 website url, cnames, ssl certificate, compress automatically - gzip, redirect http to https)
+- ACM: verify admin@mctx.com.au, main mctx.com.au, secondary *.mctx.com.au
+
+since we're verifying a .com.au ACM sends emails to admin@your_domain, administrator@your_domain, hostmaster/postmaster/webmaster
+
+Workmail
+- create organisation
+- add domain
+- verify domain using DNS TXT record (go back to Route 53)
+- set up MX and DKIM DNS records
+- create user admin
+- log in to web app
+
+imap sending:
+- create SES email address, and SMTP IAM user
+ (using https://mctx.awsapps.com/mail web app)
+- download IAM credentials to use as SMTP details
+- choose correct SES SMTP endpoint: http://docs.aws.amazon.com/ses/latest/DeveloperGuide/smtp-connect.html
+- use IMAP details to receive email: http://docs.aws.amazon.com/workmail/latest/userguide/using_IMAP_client.html
+
+resend ACM verification email admin@mctx.com.au
+
+Route53
+- set A record alias to cloudfront
+
+S3
+- create bucket called www.mctx.com.au and set up website redirect to mctx.com.au
+
+cloudfront
+- create www A record to the newly created s3 bucket
 
 {% endfilter %}
 
