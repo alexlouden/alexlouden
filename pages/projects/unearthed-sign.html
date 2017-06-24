@@ -1,0 +1,41 @@
+title: Unearthed Sign
+date: 10-11-2016
+image: /static/images/unearthed/sign/sign-people.png
+
+{% extends "post.html" %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static '/js/lightbox.js' %}"></script>
+    <script type="text/javascript">
+    $('.gallery a').simpleLightbox({
+        animationSlide: false,
+        captionPosition: 'outside',
+        animationSpeed: 0,
+        spinner: false,
+        widthRatio: 0.8,
+        heightRatio: 0.8
+    });
+    </script>
+{% endblock scripts %}
+
+{% block body %}
+{% filter markdown %}
+
+Unearthed are a small company based in Perth who run resources-focused hackathons and an accelerator. They were moving into [Core](http://www.corehub.com.au), a new co-working space in Perth CBD, and wanted an industrial style sign to suit the space that showed the orange colours of their logo.
+
+We decided on something simple - a 2 meter wide steel frame, waterjet cut sheet steel front with frosted Acrylic behind, backlit with LED strips.
+{% endfilter %}
+
+{% filter lightbox %}
+![](/static/images/unearthed/sign/sign-people.png)
+![Design](/static/images/unearthed/sign/design.png)
+![Sheet steel](/static/images/unearthed/sign/sheet.jpg)
+![Steel stock for frame](/static/images/unearthed/sign/steel.jpg)
+![Stainless steel fasteners](/static/images/unearthed/sign/fasteners.jpg)
+![Backlit](/static/images/unearthed/sign/sign-backlit.jpg)
+![Finished sign at CORE](/static/images/unearthed/sign/sign.jpg)
+{% endfilter %}
+
+{% endblock %}
+
