@@ -6,6 +6,8 @@ from django.template import Context
 from django.template.loader import get_template
 from django.template.loader_tags import BlockNode, ExtendsNode
 
+import lightbox  #noqa
+
 # Monkeypatch
 from cactus import static
 from cactus.utils.file import calculate_file_checksum
