@@ -1,12 +1,12 @@
 import datetime
 import logging
+import re
 from urlparse import urljoin
 
+from cactus.template_tags import register
 from django.template import Context
 from django.template.loader import get_template
 from django.template.loader_tags import BlockNode, ExtendsNode
-
-import lightbox  #noqa
 
 # Monkeypatch
 from cactus import static
@@ -32,6 +32,8 @@ def by_date(x):
 
 
 def preBuild(site):
+
+    register.filter('lightbox', lightbox)
 
     global Global
 
@@ -136,3 +138,23 @@ def _get_node(template, context=Context(), name='subject'):
         elif isinstance(node, ExtendsNode):
             return _get_node(node.nodelist, context, name)
     raise Exception("Node '%s' could not be found in template." % name)
+
+
+image_template = '<a href="{url}"><img src="{url}" alt="" title="{title}"></a>'
+
+
+def lightbox(content):
+
+    # Convert markdown iamge on each newline into gallery
+    lines = [line for line in content.splitlines() if line]
+
+    html = ''
+
+    for line in lines:
+        try:
+            title, url = re.match('!\[(.*)\]\((.+)\)', line).groups()
+            html += image_template.format(title=title, url=url)
+        except Exception as e:
+            print line, e
+
+    return '<div class="gallery">' + html + '</div>'
