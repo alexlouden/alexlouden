@@ -8,7 +8,7 @@ compile:
 
 test:
   pre:
-    - cactus serve -p 8000
+    - cactus serve -p 8000:
       background: true
   override:
     - nosetests test.py --with-yanc -v
