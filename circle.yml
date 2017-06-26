@@ -2,6 +2,12 @@ machine:
   python:
     version: 2.7.11
 
+dependencies:
+  override:
+    - pip install -U -r requirements.txt
+    - npm install -g coffee-script yuicompressor google-closure-compiler-js
+    - gem install sass
+
 compile:
   override:
     - cactus build
