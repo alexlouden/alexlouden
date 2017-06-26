@@ -1,0 +1,5 @@
+test:
+  pre:
+    cactus serve -p 8000
+  override:
+    nosetests test.py --with-yanc -v
