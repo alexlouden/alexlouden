@@ -9,14 +9,14 @@ sticky_header = ->
     {
       height: $(s).offset().top,
       section: $(s),
-      nav: $('nav a[href=#'+$(s).attr('class')+']')
+      nav: $('nav a[href="#'+$(s).attr('class')+'"]')
     } for s in $('section'))
-  
+
   onscroll = (e) ->
     scrolltop = $body.scrollTop()
 
     # Sticky nav
-    if not fixed and scrolltop > navheight 
+    if not fixed and scrolltop > navheight
       fixed = true
       $('header').addClass 'fixed'
     else if fixed and scrolltop <= navheight
@@ -32,7 +32,7 @@ sticky_header = ->
           s.nav
             .addClass('active')
             .siblings().removeClass('active')
-      
+
   $(window).scroll onscroll
   onscroll()
 
