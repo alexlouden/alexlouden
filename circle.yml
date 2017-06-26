@@ -11,10 +11,10 @@ dependencies:
 compile:
   override:
     - cactus build
-
-test:
-  pre:
+  post:
     - cactus serve -p 8000:
       background: true
+
+test:
   override:
     - nosetests test.py --with-yanc -v
