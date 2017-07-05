@@ -14,6 +14,7 @@ compile:
   post:
     - cactus serve -p 8000:
       background: true
+    - sleep 10
 
 test:
   override:
