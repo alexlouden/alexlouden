@@ -1,0 +1,64 @@
+title: iCetana - RGB LED Sign
+date: 11-10-2017
+image: /static/images/icetana_sign/final.jpg
+
+{% extends "post.html" %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static '/js/lightbox.js' %}"></script>
+    <script type="text/javascript">
+    $('.gallery a').simpleLightbox({
+        animationSlide: false,
+        captionPosition: 'outside',
+        animationSpeed: 0,
+        spinner: false,
+        widthRatio: 0.8,
+        heightRatio: 0.8
+    });
+    </script>
+{% endblock scripts %}
+
+{% block body %}
+
+<a href="potato"></a>
+
+{% filter markdown %}
+
+![Completed sign](/static/images/icetana_sign/final.jpg)
+
+[iCetana](https://icetana.com) (the company I work for) recently moved office and asked me to build a sign similar to the one I made last year for [Unearthed](/projects/unearthed-sign/), but something befitting a modern software startup.
+
+I used DotStar RGB LED strips controlled by a Raspberry Pi - this will allow us to automate the sign's colour, potentially to use as a [Continous Integration build light](https://en.wikipedia.org/wiki/Build_light_indicator) in the future. It also allows for animating the sign:
+
+<iframe src="https://player.vimeo.com/video/237736725?portrait=0&byline=0&title=0&badge=0&share=0" width="640" height="360" frameborder="0"></iframe>
+
+Click any image below to open the gallery.
+
+{% endfilter %}
+
+{% filter lightbox %}
+![I started by sending off a DWG to get water jet cut](/static/images/icetana_sign/design.png)
+![Components](/static/images/icetana_sign/sketch.jpg)
+![The water jet cut steel sheet arrived](/static/images/icetana_sign/2-steel-sheet.jpeg)
+![I then cut 50mm steel angle to slightly smaller than the front](/static/images/icetana_sign/3-steel-frame.jpeg)
+![Welded the joins](/static/images/icetana_sign/4-welded.jpeg)
+![Grounded the corners smooth](/static/images/icetana_sign/5-ground.jpeg)
+![Steel front, Melamine MDF backing board and steel frame](/static/images/icetana_sign/6-frame-assembly.jpeg)
+![Steel frame closeup](/static/images/icetana_sign/7-frame.jpeg)
+![I welded small tabs onto the front. These will be used to attach the front to the frame without having to have fasteners on the front](/static/images/icetana_sign/8-tabs.jpeg)
+![The larger hole in the frame allows for some adjustability in the front positioning](/static/images/icetana_sign/9-tab-attachment.jpeg)
+![I then moved on to the electronics - the parts arrived from Adafruit](/static/images/icetana_sign/11-parts.jpeg)
+![I soldered a Pi Hat - a protoboard designed to be mounted to the Raspberry Pi](/static/images/icetana_sign/12-soldered.jpeg)
+![The IC is a logic level shifter - it converts from the 3.3V Raspberry Pi logic to the 5V required by the DotStar RGB LED Strips](/static/images/icetana_sign/13-protoboard.jpeg)
+![Completed Pi - the plugs are for a LED strip power switch, a GPIO button (with pulldown) to use as an input, and SPI to the RGB strip](/static/images/icetana_sign/14-pi.jpeg)
+![I wrote a simple program to listen for button input and step through a series of pre-programmed modes](/static/images/icetana_sign/15-code.png)
+![Powder coating complete](/static/images/icetana_sign/16-powder-coating.jpeg)
+![Power button mounted](/static/images/icetana_sign/17-button.jpeg)
+![I tapped the front tabs](/static/images/icetana_sign/18-tapped.jpeg)
+![LED strips were glued in place with epoxy](/static/images/icetana_sign/19-led-strips.jpeg)
+![Electronics completed](/static/images/icetana_sign/20-electronics.jpeg)
+![The sign was then delivered and mounted to the wall](/static/images/icetana_sign/final.jpg)
+{% endfilter %}
+
+{% endblock %}
