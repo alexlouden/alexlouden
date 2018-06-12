@@ -1,6 +1,7 @@
-title: iCetana - RGB LED Sign
+title: iCetana Sign
 date: 11-10-2017
 image: /static/images/icetana_sign/final.jpg
+description: Backlit steel sign with Raspberry Pi controlled RGB LED strips
 
 {% extends "post.html" %}
 
@@ -21,19 +22,18 @@ image: /static/images/icetana_sign/final.jpg
 
 {% block body %}
 
-<a href="potato"></a>
-
 {% filter markdown %}
 
 ![Completed sign](/static/images/icetana_sign/final.jpg)
 
-[iCetana](https://icetana.com) (the company I work for) recently moved office and asked me to build a sign similar to the one I made last year for [Unearthed](/projects/unearthed-sign/), but something befitting a modern software startup.
+[iCetana](https://icetana.com) recently moved office and asked me to build a sign for the new space, befitting a modern software startup. Last year I built a bare steel industrial style sign for [Unearthed](/projects/unearthed-sign/), so for this project I wanted to go for a different style and add more interest with individually addressable coloured LED strips.
 
-I used DotStar RGB LED strips controlled by a Raspberry Pi - this will allow us to automate the sign's colour, potentially to use as a [Continous Integration build light](https://en.wikipedia.org/wiki/Build_light_indicator) in the future. It also allows for animating the sign:
+We painted the rear wall of the office blue, and I built a gloss white powder coated steel sign, with frosted acrylic, backlit with DotStar RGB LED strips controlled by a Raspberry Pi. This allows us to programatically control each LED's colour and brightness (potentially for use as a [CI build light](https://en.wikipedia.org/wiki/Build_light_indicator) in the future). I've written some basic animations to get started:
 
 <iframe src="https://player.vimeo.com/video/237736725?portrait=0&byline=0&title=0&badge=0&share=0" width="640" height="360" frameborder="0"></iframe>
+<br>
 
-Click any image below to open the gallery.
+This is the process of building the sign - click any image below to open the gallery.
 
 {% endfilter %}
 
