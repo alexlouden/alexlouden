@@ -59,7 +59,7 @@ def preBuild(site):
     Global["posts"] = sorted(Global["posts"], key=by_date, reverse=True)
     Global["projects"] = sorted(Global["projects"], key=by_date, reverse=True)
 
-    indexes = xrange(0, len(Global["posts"]))
+    indexes = xrange(len(Global["posts"]))
 
     for i in indexes:
         if i + 1 in indexes:
@@ -107,14 +107,14 @@ def preBuildPage(site, page, context, data):
 
     context['posts'] = Global["posts"]
     context['projects'] = Global["projects"]
+    page_escaped = page.path.replace('.html', '').strip('/')
 
-    for post in Global["posts"]:
-        if post["path"] == page.path:
+    for post in Global["posts"] + Global["projects"]:
+        post_path_escaped = post['path'].strip('/')
+        if post_path_escaped == page_escaped:
             context.update(post)
 
-    for post in Global["projects"]:
-        if post["path"] == page.path:
-            context.update(post)
+    context.update({'test': 'test'})
 
     return context, data
 
@@ -145,7 +145,7 @@ image_template = '<a href="{url}"><img src="{url}" alt="" title="{title}"></a>'
 
 def lightbox(content):
 
-    # Convert markdown iamge on each newline into gallery
+    # Convert markdown image on each newline into gallery
     lines = [line for line in content.splitlines() if line]
 
     html = ''
@@ -155,6 +155,6 @@ def lightbox(content):
             title, url = re.match('!\[(.*)\]\((.+)\)', line).groups()
             html += image_template.format(title=title, url=url)
         except Exception as e:
-            print line, e
+            print(line, e)
 
     return '<div class="gallery">' + html + '</div>'
