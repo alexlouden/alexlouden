@@ -37,7 +37,7 @@
 <footer class="post">
 	<span class="prev">
 		{% if prevPost %}
-			<a href='/{{ prevPost.path }}'>
+			<a href='{{ prevPost.path }}'>
 				<span class="arrow">&larr;</span> {{ prevPost.title }}
 			</a>
 		{% endif %}
@@ -45,7 +45,7 @@
 
 	<span class="next">
 		{% if nextPost %}
-			<a href='/{{ nextPost.path }}'>
+			<a href='{{ nextPost.path }}'>
 				{{ nextPost.title }} <span class="arrow">&rarr;</span>
 			</a>
 		{% endif %}
