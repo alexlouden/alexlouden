@@ -1,0 +1,46 @@
+title: Unearthed Trophies
+date: 1-04-2017
+image: /static/images/unearthed/trophies/11_awards.jpg
+description: Steel and acrylic industrial styled trophies for the Unearthed competitions
+
+{% extends "post.html" %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static '/js/lightbox.js' %}"></script>
+    <script type="text/javascript">
+    $('.gallery a').simpleLightbox({
+        animationSlide: false,
+        captionPosition: 'outside',
+        animationSpeed: 0,
+        spinner: false,
+        widthRatio: 0.8,
+        heightRatio: 0.8
+    });
+    </script>
+{% endblock scripts %}
+
+{% block body %}
+{% filter markdown %}
+
+![](/static/images/unearthed/trophies/11_awards.jpg)
+
+[Unearthed](http://unearthed.solutions/) asked me to make them 10 trophies to match the industrial style of the [sign](/projects/unearthed-sign/) I built for them earlier in the year. My design combined steel and acrylic with exposed fasteners. Click any image below to open the gallery.
+
+{% endfilter %}
+
+{% filter lightbox %}
+![Basic design - steel on far left, acrylic on far right](/static/images/unearthed/trophies/01_parts.png)
+![I did a quick Solidworks model and render to get an idea of the proportions)](/static/images/unearthed/trophies/02_render.png)
+![I nested the acrylic parts together to minimise waste, then sent off for them to be UV printed and laser cut](/static/images/unearthed/trophies/03_acrylic.jpg)
+![I sent off for 2mm steel sheet to be water jet cut](/static/images/unearthed/trophies/04_steel.png)
+![Steel sheet parts](/static/images/unearthed/trophies/05_steel_parts.jpg)
+![I cut up some 65mm flat bar for the base, and ground it smooth with a flap disc. I also ground all the sharp edges smooth](/static/images/unearthed/trophies/06_steel_grinding.jpg)
+![I welded the steel sheet to the bases](/static/images/unearthed/trophies/07_weld.jpg)
+![I sprayed the steel with a clear coat, then attached the acrylic with some aluminium spacers and stainless steel fasteneres](/static/images/unearthed/trophies/08_detail.jpg)
+![Some of the finished trophies](/static/images/unearthed/trophies/09_trophies.jpg)
+![I got a plaque laser cut to fit, and attached it with 3M adhesive tape](/static/images/unearthed/trophies/10_perth.jpg)
+![Trophy being awarded to the winning team of Unearthed Perth 2017](/static/images/unearthed/trophies/11_awards.jpg)
+{% endfilter %}
+
+{% endblock %}
