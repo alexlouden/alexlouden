@@ -12,9 +12,5 @@ exports.handler = (event, context, callback) => {
     headers['x-xss-protection'] = [{key: 'X-XSS-Protection', value: '1; mode=block'}];
     headers['referrer-policy'] = [{key: 'Referrer-Policy', value: 'same-origin'}];
 
-    // Pinned Keys are the Amazon intermediate: "s:/C=US/O=Amazon/OU=Server CA 1B/CN=Amazon"
-    //   and LetsEncrypt "Let’s Encrypt Authority X1 (IdenTrust cross-signed)"
-    headers['public-key-pins'] = [{key: 'Public-Key-Pins', value: 'pin-sha256="JSMzqOOrtyOT1kmau6zKhgT676hGgczD5VMdRMyJZFA="; pin-sha256="YLh1dUR9y6Kja30RrAn7JKnbQG/uEtLMkBgFF2Fuihg="; max-age=1296001; includeSubDomains'}];
-
     callback(null, response);
 };
