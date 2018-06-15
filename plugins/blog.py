@@ -114,8 +114,6 @@ def preBuildPage(site, page, context, data):
         if post_path_escaped == page_escaped:
             context.update(post)
 
-    context.update({'test': 'test'})
-
     return context, data
 
 
