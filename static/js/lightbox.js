@@ -559,3 +559,14 @@ $.fn.simpleLightbox = function( options )
 
 };
 })( jQuery, window, document );
+
+(function() {
+    $('.gallery a').simpleLightbox({
+        animationSlide: false,
+        captionPosition: 'outside',
+        animationSpeed: 0,
+        spinner: false,
+        widthRatio: 0.8,
+        heightRatio: 0.8
+    });
+})();

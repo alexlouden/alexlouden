@@ -1,0 +1,13 @@
+title: Systemd basics
+date: 1-04-2018
+description: Getting started with systemd services
+
+{% extends "post.html" %}
+{% block body %}
+
+{% filter markdown %}
+
+
+
+{% endfilter %}
+{% endblock body %}

@@ -8,16 +8,6 @@ description: Backlit steel sign with Raspberry Pi controlled RGB LED strips
 {% block scripts %}
     {{ block.super }}
     <script src="{% static '/js/lightbox.js' %}"></script>
-    <script type="text/javascript">
-    $('.gallery a').simpleLightbox({
-        animationSlide: false,
-        captionPosition: 'outside',
-        animationSpeed: 0,
-        spinner: false,
-        widthRatio: 0.8,
-        heightRatio: 0.8
-    });
-    </script>
 {% endblock scripts %}
 
 {% block body %}

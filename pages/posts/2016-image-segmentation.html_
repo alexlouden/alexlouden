@@ -1,0 +1,64 @@
+title: Image segmentation
+date: 10-03-2015
+description: Realtime image processing on Heroku
+
+{% extends "post.html" %}
+{% block body %}
+
+{% filter markdown %}
+
+Image segmentation is the process of splitting up an image into different pieces, often by colour or texture. In design it's called [posterization](https://en.wikipedia.org/wiki/Posterization), and in computer vision it's known as [colour quantization](https://en.wikipedia.org/wiki/Color_quantization). It's essentially a technique for reducing the number of colours in an image by clustering similar colours together.
+
+![](http://i.imgur.com/hsiR4hV.jpg)
+![](http://segment-image.herokuapp.com/http://i.imgur.com/hsiR4hV.jpg?cluster_method=meanshift&quantile=0.015&colour_space=ycrcb)
+
+I've built a web service inspired by the [imgix](http://imgix.com) API - you pass in the image url (optionally urlencoded),  control the algorithm with query parameters, and recieve a segmented image as the response (or a JSON formatted error). This allows you to embed it in a web page, or play with the algorithm in your browser without having to install any software.
+
+```bash
+https://segment-image.herokuapp.com/<image_url>?cluster_method=kmeans&num_clusters=10
+```
+
+The service supports the following parameters:
+
+**cluster_method** ward, meanshift or kmeans<br>
+**colour_space** rgb, hsv, hls, ycrcb, lab or luv<br>
+**num_clusters** integer between 1 and 100, e.g. 5 (required with ward and kmeans)<br>
+**quantile** a float between 0 and 1, e.g. 0.01 (required with meanshift)
+
+Ward is interesting, because it's configured with connectivity constraints - it'll cluster colours together by region. It's also the slowest algorithm, so may timeout after 25 seconds.
+
+# Examples
+
+Robot soccer
+
+![Original](http://i.imgur.com/zenUZKU.jpg)
+
+Golden retriever
+
+![Original](http://i.imgur.com/POXiHYI.jpg)
+
+K-means, lab colour space, num_clusters 2 --> 6
+
+![](http://segment-image.herokuapp.com/http://i.imgur.com/POXiHYI.jpg?cluster_method=kmeans&num_clusters=2&colour_space=lab)
+![](http://segment-image.herokuapp.com/http://i.imgur.com/POXiHYI.jpg?cluster_method=kmeans&num_clusters=3&colour_space=lab)
+![](http://segment-image.herokuapp.com/http://i.imgur.com/POXiHYI.jpg?cluster_method=kmeans&num_clusters=4&colour_space=lab)
+![](http://segment-image.herokuapp.com/http://i.imgur.com/POXiHYI.jpg?cluster_method=kmeans&num_clusters=5&colour_space=lab)
+![](http://segment-image.herokuapp.com/http://i.imgur.com/POXiHYI.jpg?cluster_method=kmeans&num_clusters=6&colour_space=lab)
+
+
+Mean-shift
+
+![](http://segment-image.herokuapp.com/http://i.imgur.com/POXiHYI.jpg?cluster_method=meanshift&quantile=0.03&colour_space=rgb)
+![](http://segment-image.herokuapp.com/http://i.imgur.com/POXiHYI.jpg?cluster_method=meanshift&quantile=0.04&colour_space=rgb)
+![](http://segment-image.herokuapp.com/http://i.imgur.com/POXiHYI.jpg?cluster_method=meanshift&quantile=0.05&colour_space=rgb)
+![](http://segment-image.herokuapp.com/http://i.imgur.com/POXiHYI.jpg?cluster_method=meanshift&quantile=0.06&colour_space=rgb)
+![](http://segment-image.herokuapp.com/http://i.imgur.com/POXiHYI.jpg?cluster_method=meanshift&quantile=0.07&colour_space=rgb)
+
+Ward
+
+![](http://segment-image.herokuapp.com/http://i.imgur.com/POXiHYI.jpg?cluster_method=ward&num_clusters=5&colour_space=rgb)
+
+
+
+{% endfilter %}
+{% endblock body %}
