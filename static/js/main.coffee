@@ -1,14 +1,12 @@
-throttle = (func, wait, options) ->
+throttle = (func, wait) ->
   timeout = undefined
   context = undefined
   args = undefined
   result = undefined
   previous = 0
-  if !options
-    options = {}
 
   later = ->
-    previous = if options.leading == false then 0 else Date.now
+    previous = Date.now
     timeout = null
     result = func.apply(context, args)
     if !timeout
@@ -17,8 +15,6 @@ throttle = (func, wait, options) ->
 
   throttled = ->
     now = Date.now
-    if !previous and options.leading == false
-      previous = now
     remaining = wait - (now - previous)
     context = this
     args = arguments
@@ -30,32 +26,30 @@ throttle = (func, wait, options) ->
       result = func.apply(context, args)
       if !timeout
         context = args = null
-    else if !timeout and options.trailing != false
+    else if !timeout
       timeout = setTimeout(later, remaining)
     result
-
-  throttled.cancel = ->
-    clearTimeout timeout
-    previous = 0
-    timeout = context = args = null
-    return
 
   throttled
 
 
 sticky_header = ->
   $body = $('html')
+  $window = $(window)
   fixed = false
   navheight = 115
   fixednavheight = 55 # + 100
   # 100 extra so that you're properly in the section before switching
 
-  sections = (
-    {
-      height: $(s).offset().top,
-      section: $(s),
-      nav: $('nav a[href="#'+$(s).attr('class')+'"]')
-    } for s in $('section'))
+  get_sections = ->
+    sections = (
+      {
+        height: $(s).offset().top,
+        section: $(s),
+        nav: $('nav a[href="#'+$(s).attr('class')+'"]')
+      } for s in $('section'))
+
+  sections = get_sections()
 
   onscroll = (e) ->
     scrolltop = $body.scrollTop()
@@ -69,16 +63,18 @@ sticky_header = ->
       $('header').removeClass 'fixed'
 
     # Underlining
-    scrolltop += fixednavheight
-    for s, i in sections
-      next = sections[i + 1]
-      if s.height <= scrolltop
-        if not next or next and scrolltop < next.height
-          s.nav
-            .addClass('active')
-            .siblings().removeClass('active')
+    for s, i in sections by -1
+      mid_browser = scrolltop + $window.height() / 2
+      s_height = if i > 0 then s.height else 0
+      if mid_browser >= s_height
+        s.nav
+          .addClass('active')
+          .siblings().removeClass('active')
+        return
 
   $(window).on 'resize scroll', throttle(onscroll, 20)
+  $(window).on 'resize', throttle(get_sections, 100)
+
   onscroll()
 
 
