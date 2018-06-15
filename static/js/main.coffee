@@ -1,5 +1,5 @@
 sticky_header = ->
-  $body = $('body')
+  $body = $('html')
   fixed = false
   navheight = 115
   fixednavheight = 55 + 100
