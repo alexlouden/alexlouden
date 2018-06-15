@@ -7,8 +7,6 @@
 
 	<title>{% block title %}Alex Louden{% endblock %}</title>
 	<link rel="stylesheet" href="{% static '/css/style.css' %}">
-	<link href='//fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
-	<link href='//fonts.googleapis.com/css?family=Playfair+Display' rel='stylesheet' type='text/css'>
 	<link rel="alternate" type="application/rss+xml" title="Feed" href="/rss.xml">
 	{% block styles %}{% endblock styles %}
 
@@ -23,6 +21,9 @@
 	<meta name="twitter:title" content="{{ title }}" />
 	<meta name="twitter:description" content="{{ description }}" />
 	<meta name="twitter:image" content="{{ image }}" />
+
+	{# Preload h1 font #}
+	<link rel="preload" href="{% static "fonts/quicksand.woff2" %}" as="font">
 </head>
 <body class="{% block body_class %}home{% endblock body_class %}">
 
