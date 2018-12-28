@@ -1,0 +1,51 @@
+title: Mechanical Rock Sign
+date: 20-7-2018
+image: /static/images/mechrock/final.jpg
+description: Backlit industrial steel sign with Raspberry Pi controlled RGB LED strips
+
+{% extends "post.html" %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static '/js/lightbox.js' %}"></script>
+{% endblock scripts %}
+
+{% block body %}
+
+{% filter markdown %}
+
+![Completed sign](/static/images/mechrock/final.jpg)
+
+I built this sign for [Mechanical Rock](https://www.mechanicalrock.io/) - a local software company's new office in Perth. It's similar in construction to the [iCetana sign](/projects/icetana-sign/) I made the year before, except I made this sign's frame with 2mm steel sheet rather than angle, and I blackened the steel using JAX and clear coated it. The RGB LED strips is also controlled by a raspberry pi, however I built a web interface and API to control the lighting modes. I also added a small USB microphone and wrote some basic signal processing code so it would animate to music:
+
+<iframe src="https://player.vimeo.com/video/307638522?portrait=0&byline=0&title=0&badge=0&share=0" width="640" height="360" frameborder="0"></iframe>
+<br>
+
+This is the process of building the sign - click any image below to open the gallery.
+
+{% endfilter %}
+
+{% filter lightbox %}
+![I started by sending off a DWG to get water jet cut](/static/images/mechrock/0-logo.png)
+![I welded the corners on the outside](/static/images/mechrock/1-corners-outside.jpg)
+![And welded the inside corners, then laid out the tabs to attach the front.](/static/images/mechrock/2-corners-inside.jpg)
+![I ground the corner welds flat](/static/images/mechrock/3-corners-ground.jpg)
+![I welded the tabs to attach the front to the frame](/static/images/mechrock/4-tabs-welded.jpg)
+![And then used JAX to blacken the ground welds so it matched the rest of the sign](/static/images/mechrock/5-corners-blackened.jpg)
+![I cut out some steel sheet corner supports](/static/images/mechrock/6-corner-supports.jpg)
+![Then welded them in place](/static/images/mechrock/7-supports-welded.jpg)
+![I painted the welds with Cold Gal so they wouldn't rust](/static/images/mechrock/8-supports-painted.jpg)
+![I had some acrylic cut to size, and laid it out](/static/images/mechrock/9-acrylic-layout.jpg)
+![I drilled the hole for a power button a little large, so I welded it a little smaller](/static/images/mechrock/10-welded-hole-mistake.jpg)
+![This is the fixed hole - it blends in really well](/static/images/mechrock/11-attached-button.jpg)
+![I used a wire wheel on my grinder to buff all visible surfaces of the sign, then degreased it and cleaned all the oils off with acetone, and then applied three clear coats to get this surface.](/static/images/mechrock/12-finished-front.jpg)
+![I used 3M UHB tape to attach the acrylic to the front of the sign](/static/images/mechrock/13-attached-acrylic.jpg)
+![I attached the steel cutouts of the inside of the letters the same way](/static/images/mechrock/14-attached-acrylic-front.jpg)
+![I used epoxy and super glue to attach the LED strips to a sheet of melamine MDF](/static/images/mechrock/15-glued-led-strips-mdf.jpg)
+![I bolted the sign on the wall, and plugged it in. You can see the Raspberry Pi boot screen here. I allowed enough space at the bottom of the sign to hide the power outlets.](/static/images/mechrock/16-mounted-monitor.jpg)
+![I had to notch out the bottom of the sign to fit around the power and data conduits](/static/images/mechrock/17-notched.jpg)
+![This is the website to control the sign - I designed it myself](/static/images/mechrock/website.png)
+![Completed sign!](/static/images/mechrock/18-finished.jpg)
+
+{% endfilter %}
+{% endblock %}
