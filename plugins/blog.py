@@ -1,7 +1,7 @@
 import datetime
 import logging
 import re
-from urlparse import urljoin
+from urllib.parse import urljoin
 
 from cactus.template_tags import register
 from django.template import Context
@@ -59,7 +59,7 @@ def preBuild(site):
     Global["posts"] = sorted(Global["posts"], key=by_date, reverse=True)
     Global["projects"] = sorted(Global["projects"], key=by_date, reverse=True)
 
-    indexes = xrange(len(Global["posts"]))
+    indexes = range(len(Global["posts"]))
 
     for i in indexes:
         if i + 1 in indexes:
