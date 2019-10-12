@@ -1,0 +1,179 @@
+title: Functional programming with Lodash
+date: 12-10-2019
+description: Exploring Lodash's FP module
+
+{% extends "post.html" %}
+{% block body %}
+
+{% filter markdown %}
+
+[Lodash](https://lodash.com/docs/4.17.15) is a utility library written for Javascript - it contains a lot of useful functions for accessing and manipulating objects, arrays and lists.
+
+Here we're using `get` to safely access the properties of an object. This is equivalent to returning `obj.user.name`, but if `obj.user` is missing then it will return `null` rather than throwing a TypeError.
+
+```javascript
+import { get } from 'lodash'
+
+const obj = { user: { name: 'Alex' } }
+get(obj, 'user.name')
+```
+
+Lodash exports a functional version of all their utilities as `lodash/fp`:
+
+```javascript
+import { get } from 'lodash/fp'
+
+const obj = { user: { name: 'Alex' } }
+const getName = get('user.name')
+getName(obj)
+```
+
+All the functions in `lodash/fp` are transformed like this, so that instead of calling them using `func(a, b, c)` you use `func(c)(b)(a)`. (This is called [currying](https://dev.to/bettercodingacademy/functional-programming-all-you-need-to-know-about-currying-5k7))
+
+There are some slight differences between `lodash` and `lodash/fp` - e.g. `get` from `lodash` can take an optional 3rd parameter, so you can choose what to return by default if the prop you're trying to access is missing. The curried `fp` version doesn't - it can only be called as `get(prop)(obj)`.
+
+This is referred to as having a fixed arity of 2 - `get` can only be called twice.
+
+As with a lot of the functions in `lodash/fp`, with `get` the order of arguments is reversed - instead of `get(obj, prop)` it's now `get(prop)(obj)`. This is done because the first argument is usually the data that you want to manipulate - it's easier to chain multiple functions together this way.
+
+In this example, we've got a list of users and we'd like a list of just their `name` and `email`:
+
+```javascript
+import { pick, map } from 'lodash/fp'
+
+const users = [
+  { name: 'Alex', email: 'alex@example.com', uid: '124234', userType: 'admin' },
+  { name: 'Beau', email: null, userType: 'user', uid: '152335' },
+  { name: 'Charlie', email: 'charlie@char.ly', userType: 'user', uid: '23221' },
+  { name: 'Daytona', email: 'dave@dave.io', userType: 'user', uid: '234216' }
+  // ...
+]
+
+const getUserProperties = pick(['name', 'email'])
+const cleanUserList = map(getUserProperties)
+
+cleanUserList(users)
+// Returns the following:
+// [
+//   { name: 'Alex', email: 'alex@example.com' },
+//   { name: 'Beau', email: null },
+//   ...
+// ]
+```
+
+Rather than defining functions for each intermediate step, we can use [`flow`](https://lodash.com/docs/4.17.15#flow) to combine them. In this example, we're also filtering out users without a valid email, and grouping users by whether they're an `admin` or a `user`:
+
+```javascript
+import { flow, filter, map, pick, groupBy } from 'lodash/fp'
+
+const users = [
+  // as above
+]
+
+const groupUserList = flow(
+  // filter users by whether email is truthy
+  filter('email'),
+  map(pick(['name', 'email', 'userType'])),
+  groupBy('userType')
+)
+
+groupUserList(users)
+// Returns the following:
+// {
+//   admin: [
+//     { name: 'Alex', email: 'alex@example.com', userType: 'admin' }
+//   ],
+//   user: [
+//     { name: 'Charlie', email: 'charlie@char.ly', userType: 'user' },
+//     { name: 'Daytona', email: 'dave@dave.io', userType: 'user' }
+//   ]
+// }
+```
+
+You could chain the functions together yourself, however this becomes a lot harder to follow:
+
+```javascript
+const groupUserList = users =>
+  // 3. group
+  groupBy('userType')(
+    // 2. pick props
+    map(pick(['name', 'email', 'userType']))(
+      // 1. filter users by whether email is truthy
+      filter('email')(users)
+    )
+  )
+```
+
+You can compose similar expressions like this with regular `lodash` using [`chain`](https://lodash.com/docs/4.17.15#chain), however this comes with a [big downside](https://medium.com/making-internets/why-using-chain-is-a-mistake-9bc1f80d51ba) - if you use `chain` then you have to import the entirity of `lodash`. With `lodash/fp` and `flow`, module bundlers (such as Webpack) can selectively import just the parts of lodash you're using, resulting in a much smaller Javascript bundle (this is called [tree shaking](https://webpack.js.org/guides/tree-shaking/)).
+
+```javascript
+// Not recommended!
+import { chain, pick } from 'lodash'
+
+const users = [
+  // as above
+]
+
+const cleanUserList = users =>
+  chain(users)
+    .filter('email')
+    .map(user => pick(user, ['name', 'email', 'userType']))
+    .groupBy('userType')
+    .value()
+```
+
+Another example - creating a object to map from uid to name:
+
+```javascript
+import { flow, map, fromPairs } from 'lodash/fp'
+
+const users = [
+  // as above
+]
+
+const uidToName = flow(
+  map(user => [user.uid, user.name]),
+  fromPairs
+)
+
+uidToName(users)
+// Returns:
+// {
+//   23221: 'Charlie',
+//   124234: 'Alex',
+//   152335: 'Beau',
+//   234216: 'Daytona'
+// }
+```
+
+This example shows extracting a list of unique email domains for our users:
+
+```javascript
+import { flow, map, filter, get, isString, uniq } from 'lodash/fp'
+
+const users = [
+  { name: 'Alex', email: 'alex@example.com', uid: '124234', userType: 'admin' },
+  { name: 'Beau', email: null, userType: 'user', uid: '152335' },
+  { name: 'Charlie', email: 'charlie@char.ly', userType: 'user', uid: '23221' },
+  { name: 'Daytona', email: 'dave@dave.io', userType: 'user', uid: '234216' },
+  { name: 'Elliott', email: 'elliott@example.com' }
+  // ...
+]
+
+const getDomain = email => email.split('@')[1]
+
+const getEmailDomains = flow(
+  map(get('email')),
+  filter(isString),
+  map(getDomain),
+  uniq
+)
+
+getEmailDomains(users)
+// Returns: ["example.com", "char.ly", "dave.io"]
+```
+
+I hope this helps! Please feel free to get in touch on [Twitter](https://twitter.com/alexlouden) 🙂
+
+{% endfilter %}
+{% endblock body %}
