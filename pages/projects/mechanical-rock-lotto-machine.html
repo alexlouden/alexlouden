@@ -1,0 +1,86 @@
+title: Lotto ball machine
+date: 1-11-2019
+image: /static/images/lotto/closeup.jpg
+description: Custom lotto ball machine
+
+{% extends "post.html" %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static '/js/lightbox.js' %}"></script>
+{% endblock scripts %}
+
+{% block body %}
+
+{% filter markdown %}
+
+[Mechanical Rock](https://www.mechanicalrock.io/) runs a tech conference called [Latency](https://www.latencyconf.io/), and earlier in the year they asked me to make something that could help them to select door prizes at the conference.
+
+The idea I came up with was a lotto ball machine that used air to mix up the balls. The design was made up from a cylindrical acrylic tube with a bottom section made of steel (to match their sign), which would house a fan. The fan would mix up the balls by blowing them around in a helical pattern. A winning ball would somehow be selected, go up a tube in the middle of the cylinder, and pop out the top - hurrah!
+
+<div style="display: flex;">
+<div style="flex: 1">
+<img src="/static/images/lotto/render.png" alt=""/>
+</div>
+<div style="flex: 0.75">
+<img src="/static/images/lotto/plan.jpg" alt=""/>
+</div>
+</div>
+
+<br>
+
+This is the finished machine in action (thanks to Hamish for the demo!)
+
+<div style="margin-left:-100px; margin-right:-100px;">
+<div style="padding:56.25% 0 0 0;position:relative; border-radius: 3px; overflow:hidden">
+<iframe src="https://player.vimeo.com/video/386203566?autoplay=1&loop=1&title=0&byline=0&portrait=0&byline=0&share=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+</div>
+</div>
+
+<br>
+
+Some photos of it on the day of the conference:
+
+<div style="display: flex;" class="gallery">
+<div style="flex: 1; margin-right: 5px;">
+<a href="/static/images/lotto/blur.jpg"><img src="/static/images/lotto/blur.jpg" alt=""/></a>
+</div>
+<div style="flex: 1.105">
+<a href="/static/images/lotto/closeup.jpg" style="margin-bottom: 5px"><img src="/static/images/lotto/closeup.jpg" alt="" /></a>
+<a href="/static/images/lotto/in_action.jpg"><img src="/static/images/lotto/in_action.jpg" alt=""/></a>
+</div>
+</div>
+</div>
+
+{% comment %}
+<div style="padding:177.78% 0 0 0;position:relative;">
+<iframe src="https://player.vimeo.com/video/386205799?autoplay=1&loop=1&title=0&byline=0&portrait=0&byline=0&share=0&muted=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="fullscreen" allowfullscreen></iframe>
+</div> {% endcomment %}
+
+<br>
+
+This is the process of building it - click any image below to open the gallery.
+
+{% endfilter %}
+
+{% filter lightbox %}
+![](/static/images/lotto/1_tools.jpeg)
+![](/static/images/lotto/2_steel.jpg)
+![](/static/images/lotto/3_bending.jpeg)
+![](/static/images/lotto/4_welding.jpeg)
+![](/static/images/lotto/5_finishing.jpeg)
+![](/static/images/lotto/6_finishing2.jpeg)
+![](/static/images/lotto/7_fanmount.jpg)
+![](/static/images/lotto/8_fan.jpeg)
+![](/static/images/lotto/9_electronics.jpeg)
+![](/static/images/lotto/10_backlight.jpeg)
+![](/static/images/lotto/11_lightbox.jpeg)
+![](/static/images/lotto/12_acrylictube.jpg)
+![](/static/images/lotto/13_actuator.jpeg)
+![](/static/images/lotto/14_assembly.jpeg)
+![](/static/images/lotto/15_acrylictop.jpg)
+![](/static/images/lotto/16_done.jpeg)
+{% endfilter %}
+{% endblock %}
+
+
