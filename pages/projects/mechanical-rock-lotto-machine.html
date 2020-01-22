@@ -15,16 +15,15 @@ description: Custom lotto ball machine
 {% filter markdown %}
 
 <div class="popout">
-<div style="display: flex;" class="gallery">
-<div style="flex: 1; margin-right: 5px;">
-<a href="/static/images/lotto/blur.jpg"><img src="/static/images/lotto/blur.jpg" alt=""/></a>
-</div>
-<div style="flex: 1.109">
-<a href="/static/images/lotto/closeup.jpg" style="margin-bottom: 5px"><img src="/static/images/lotto/closeup.jpg" alt="" /></a>
-<a href="/static/images/lotto/in_action.jpg"><img src="/static/images/lotto/in_action.jpg" alt=""/></a>
-</div>
-</div>
-</div>
+    <div class="gallery side-by-side">
+        <div class="side-by-side-1-left mr-5">
+            <a href="/static/images/lotto/blur.jpg"><img src="/static/images/lotto/blur.jpg" alt=""/></a>
+        </div>
+        <div class="side-by-side-1-right">
+            <a href="/static/images/lotto/closeup.jpg" class="mb-5"><img src="/static/images/lotto/closeup.jpg" alt="" /></a>
+            <a href="/static/images/lotto/in_action.jpg"><img src="/static/images/lotto/in_action.jpg" alt=""/></a>
+        </div>
+    </div>
 </div>
 
 [Mechanical Rock](https://www.mechanicalrock.io/) runs a tech conference called [Latency](https://www.latencyconf.io/), and earlier in the year they asked me to make something that could help them to select door prizes at the conference.
@@ -33,11 +32,11 @@ The idea I came up with was a lotto ball machine that uses air to mix up the bal
 
 After a few design iterations with some basic cardboard mockups, I settled on the following size and shape. I drew a 3D model in Fusion 360, and then exported the steel and acrylic profiles to be laser cut.
 
-<div style="display: flex;">
-<div style="flex: 1">
+<div class="side-by-side">
+<div>
 <img src="/static/images/lotto/render.png" alt=""/>
 </div>
-<div style="flex: 0.75">
+<div class="side-by-side-2-right">
 <img src="/static/images/lotto/plan.jpg" alt=""/>
 </div>
 </div>
@@ -76,18 +75,20 @@ I took a few photos while building it - click any image below to open the galler
 
 {% filter markdown %}
 
-This is the finished machine in action (thanks to Hamish for the demo!). It's controllable via the web app and the API!
+This is the finished machine in action (thanks to Hamish for the demo!). It's controllable via the web app and the API.
 
 <div class="popout">
-<div style="padding:56.25% 0 0 0;position:relative; border-radius: 3px; overflow:hidden">
+<div class="lotto-video1">
 <iframe src="https://player.vimeo.com/video/386203566?autoplay=1&loop=1&title=0&byline=0&portrait=0&byline=0&share=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 </div>
 </div>
 
 <br>
 
-<div style="padding:177.78% 0 0 0;position:relative;">
+<div class="lotto-video2-wrapper">
+<div class="lotto-video2">
 <iframe src="https://player.vimeo.com/video/386205799?autoplay=1&loop=1&title=0&byline=0&portrait=0&byline=0&share=0&muted=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="fullscreen" allowfullscreen></iframe>
+</div>
 </div>
 
 <br>
