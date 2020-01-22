@@ -4,7 +4,6 @@
 
 article.post
   @extend %layout
-
   padding-top: 100px
 
 ////////////////////////////////////////////
@@ -27,7 +26,6 @@ article.post
       font-size: 16px
       font-variant: small-caps
       text-transform: lowercase
-
 
   // Headings and paragraphs
   h1, h2, h3, h4, h5, p
@@ -72,7 +70,6 @@ article.post
 
   a
     color: $link_blue
-
 
 ////////////////////////////////////////////
 //             Element styles             //
@@ -177,6 +174,8 @@ article.post
 .gallery
   column-count: 3
   column-gap: 5px
+  margin-top: 2em
+  margin-bottom: 2em
 
   +mobile
     column-count: 2
@@ -188,6 +187,14 @@ article.post
     +transition(all 0.1s ease)
     &:hover
       +filter(brightness(0.85))
+
+.popout
+  margin-left: -100px
+  margin-right: -100px
+
+  @media only screen and (max-width: 810px)
+    margin-left: 0
+    margin-right: 0
 
 
 ////////////////////////////////////////////

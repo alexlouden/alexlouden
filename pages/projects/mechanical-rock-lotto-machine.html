@@ -14,9 +14,24 @@ description: Custom lotto ball machine
 
 {% filter markdown %}
 
+<div class="popout">
+<div style="display: flex;" class="gallery">
+<div style="flex: 1; margin-right: 5px;">
+<a href="/static/images/lotto/blur.jpg"><img src="/static/images/lotto/blur.jpg" alt=""/></a>
+</div>
+<div style="flex: 1.109">
+<a href="/static/images/lotto/closeup.jpg" style="margin-bottom: 5px"><img src="/static/images/lotto/closeup.jpg" alt="" /></a>
+<a href="/static/images/lotto/in_action.jpg"><img src="/static/images/lotto/in_action.jpg" alt=""/></a>
+</div>
+</div>
+</div>
+</div>
+
 [Mechanical Rock](https://www.mechanicalrock.io/) runs a tech conference called [Latency](https://www.latencyconf.io/), and earlier in the year they asked me to make something that could help them to select door prizes at the conference.
 
-The idea I came up with was a lotto ball machine that used air to mix up the balls. The design was made up from a cylindrical acrylic tube with a bottom section made of steel (to match their sign), which would house a fan. The fan would mix up the balls by blowing them around in a helical pattern. A winning ball would somehow be selected, go up a tube in the middle of the cylinder, and pop out the top - hurrah!
+The idea I came up with was a lotto ball machine that uses air to mix up the balls. The design was based around a cylindrical acrylic tube, with a bottom section made of steel (to match [their sign](/projects/mechanical-rock-sign/)) to house the fan and electronics. The fan would mix up the balls by blowing them around in a helical pattern, then a winning ball would somehow be selected, be blown up a tube in the middle of the cylinder, and pop out the top 🎉!
+
+After a few design iterations with some basic cardboard mockups, I settled on the following size and shape. I drew a 3D model in Fusion 360, and then exported the steel and acrylic profiles to be laser cut.
 
 <div style="display: flex;">
 <div style="flex: 1">
@@ -27,11 +42,43 @@ The idea I came up with was a lotto ball machine that used air to mix up the bal
 </div>
 </div>
 
-<br>
+This was one of the most challenging projects I've ever worked on. I learned a tonne along the way - bending and MIG welding thin sheet steel, selecting and speccing axial fans, cutting and flame polishing acrylic tube, installing brass threaded inserts into acrylic, generating a 5V 50kHz PWM signal from the Rasberry Pi's GPIO, controlling the RGBW LED strips, and more.
 
-This is the finished machine in action (thanks to Hamish for the demo!)
+I took a few photos while building it - click any image below to open the gallery.
 
-<div style="margin-left:-100px; margin-right:-100px;">
+{% endfilter %}
+
+<div class="popout">
+{% filter lightbox %}
+![Steel profiles](/static/images/lotto/steel_profiles.png)
+![Laser cut steel arrived](/static/images/lotto/1_steel.jpg)
+![A few new tools to make welding and smoothing the join in the cylinder a bit easier](/static/images/lotto/2_tools.jpeg)
+![I used a small benchtop sheet metal bender to form the curved parts](/static/images/lotto/3_bending.jpeg)
+![I completely botched my first attempt at welding the join, so I cut it out and started again. I did some research on auto body welding, and used a few techinques I learned from videos online the second time, and it came out a lot better.](/static/images/lotto/4_welding.jpeg)
+![I used a small air powered die grinder with a Roloc disc holder and sanding discs to clean up the welds](/static/images/lotto/5_finishing.jpeg)
+![I used a Scotch-Brite surface conditioning disc to texture the surface. This side is where the welded join was - it blended in quite well. You can just make out a faint line if you look closely.](/static/images/lotto/6_finishing2.jpeg)
+![I mounted the fan with a rubber gasket to a piece of sheet metal, and then welded that into the steel base. I hope the fan doesn't need replacing in the future 😀](/static/images/lotto/7_fanmount.jpg)
+![This is what the rear of the machine looks like the - the recessed cutout below is for the power cord, switch and fuse.](/static/images/lotto/8_fan.jpeg)
+![I soldered a prototyping hat for the Raspberry Pi. This connected the fan controller (top), ball sensor, linear actuator and RGBW LED strips to the Pi.](/static/images/lotto/9_electronics.jpeg)
+![I used an oscilloscope to confirm that the PWM signal used to control the fan speed was 5V and 50kHz. Channel 1 here is the 3.3V signal coming from the Pi, and Channel 2 is from the 5V logic level converter](/static/images/lotto/10_scope.jpeg)
+![I made a sheet metal bracket to hold the linear actuator, and then mounted it alongside the LED strips. I wired up all the LEDs in a long daisy chain so they can be individually addressed - this allows for animating patterns](/static/images/lotto/11_backlight.jpeg)
+![I bent and welded a lightbox for behind the logo at the front of the machine - this also contains LED strips](/static/images/lotto/12_lightbox.jpeg)
+![I cut the lightbox acrylic to size, and then bent it with a heat gun. I used tape to maintain the correct curve while it cooled](/static/images/lotto/13_bent_acrylic.jpeg)
+![Finished lightbox - the cover is attached with screws](/static/images/lotto/14_lightbox.jpeg)
+![I then carefully cut out a notch in some acrylic tube using a hacksaw, and smoothed it out using a flap wheel in the die grinder.](/static/images/lotto/15_acrylictube_cut.jpeg)
+![The cutout is sized to comfortably fit a table tennis ball when the linear actuator is down, and be blocked when it's up.](/static/images/lotto/16_acrylictube.jpg)
+![I then drilled and filed a rectangular cutout into the acrylic for the optical sensor. I glued it in place so it's flush. This is used to detect when a ball enters the tube, so the actuator can be raised, so that the machine only selects a single ball at a time.](/static/images/lotto/17_actuator.jpeg)
+![This is the view of the assembled machine from the bottom. The three pipes are used to direct airflow from the fan to the three openings in the top, to make the balls spin in a helical pattern. The chassis is grounded, and the motor controller has a circuit breaker to prevent overpower.](/static/images/lotto/18_assembly.jpeg)
+![So that the top of the machine is removable, I installed brass threaded inserts into this piece of acrylic, which is glued into place.](/static/images/lotto/19_acrylictop.jpg)
+![Completed lotto ball machine!](/static/images/lotto/20_done.jpeg)
+{% endfilter %}
+</div>
+
+{% filter markdown %}
+
+This is the finished machine in action (thanks to Hamish for the demo!). It's controllable via the web app and the API!
+
+<div class="popout">
 <div style="padding:56.25% 0 0 0;position:relative; border-radius: 3px; overflow:hidden">
 <iframe src="https://player.vimeo.com/video/386203566?autoplay=1&loop=1&title=0&byline=0&portrait=0&byline=0&share=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 </div>
@@ -39,48 +86,13 @@ This is the finished machine in action (thanks to Hamish for the demo!)
 
 <br>
 
-Some photos of it on the day of the conference:
-
-<div style="display: flex;" class="gallery">
-<div style="flex: 1; margin-right: 5px;">
-<a href="/static/images/lotto/blur.jpg"><img src="/static/images/lotto/blur.jpg" alt=""/></a>
-</div>
-<div style="flex: 1.105">
-<a href="/static/images/lotto/closeup.jpg" style="margin-bottom: 5px"><img src="/static/images/lotto/closeup.jpg" alt="" /></a>
-<a href="/static/images/lotto/in_action.jpg"><img src="/static/images/lotto/in_action.jpg" alt=""/></a>
-</div>
-</div>
-</div>
-
-{% comment %}
 <div style="padding:177.78% 0 0 0;position:relative;">
 <iframe src="https://player.vimeo.com/video/386205799?autoplay=1&loop=1&title=0&byline=0&portrait=0&byline=0&share=0&muted=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="fullscreen" allowfullscreen></iframe>
-</div> {% endcomment %}
+</div>
 
 <br>
 
-This is the process of building it - click any image below to open the gallery.
+I'd love to hear what you think - please let me know on [twitter](https://twitter.com/alexlouden)! I'm really keen to take on more projects like this in the future - if you've got an idea for something that combines electronics, software and mechanical design and fabrication then please get in touch 😀
 
-{% endfilter %}
-
-{% filter lightbox %}
-![](/static/images/lotto/1_tools.jpeg)
-![](/static/images/lotto/2_steel.jpg)
-![](/static/images/lotto/3_bending.jpeg)
-![](/static/images/lotto/4_welding.jpeg)
-![](/static/images/lotto/5_finishing.jpeg)
-![](/static/images/lotto/6_finishing2.jpeg)
-![](/static/images/lotto/7_fanmount.jpg)
-![](/static/images/lotto/8_fan.jpeg)
-![](/static/images/lotto/9_electronics.jpeg)
-![](/static/images/lotto/10_backlight.jpeg)
-![](/static/images/lotto/11_lightbox.jpeg)
-![](/static/images/lotto/12_acrylictube.jpg)
-![](/static/images/lotto/13_actuator.jpeg)
-![](/static/images/lotto/14_assembly.jpeg)
-![](/static/images/lotto/15_acrylictop.jpg)
-![](/static/images/lotto/16_done.jpeg)
 {% endfilter %}
 {% endblock %}
-
-
