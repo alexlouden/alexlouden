@@ -33,21 +33,21 @@ def by_date(x):
 
 def preBuild(site):
 
-    register.filter('lightbox', lightbox)
+    register.filter("lightbox", lightbox)
 
     global Global
 
     for page in site.pages():
 
         # Skip non-html pages
-        if not page.path.endswith('.html'):
+        if not page.path.endswith(".html"):
             continue
 
-        if page.path.startswith('posts/'):
-            article_type = 'posts'
+        if page.path.startswith("posts/"):
+            article_type = "posts"
 
-        elif page.path.startswith('projects/'):
-            article_type = 'projects'
+        elif page.path.startswith("projects/"):
+            article_type = "projects"
 
         else:
             continue
@@ -58,14 +58,17 @@ def preBuild(site):
     # Sort the posts by date and add the next and previous page indexes
     Global["posts"] = sorted(Global["posts"], key=by_date, reverse=True)
     Global["projects"] = sorted(Global["projects"], key=by_date, reverse=True)
+    Global["everything"] = sorted(
+        Global["posts"] + Global["projects"], key=by_date, reverse=True
+    )
 
     indexes = range(len(Global["posts"]))
 
     for i in indexes:
         if i + 1 in indexes:
-            Global["posts"][i]['prevPost'] = Global["posts"][i + 1]
+            Global["posts"][i]["prevPost"] = Global["posts"][i + 1]
         if i - 1 in indexes:
-            Global["posts"][i]['nextPost'] = Global["posts"][i - 1]
+            Global["posts"][i]["nextPost"] = Global["posts"][i - 1]
 
 
 def parse_page(site, page):
@@ -89,6 +92,9 @@ def parse_page(site, page):
     if "image" in context and context["image"]:
         context_post["image"] = urljoin(site.url, context["image"])
 
+    if "description" in context and context["description"]:
+        context_post["description"] = context["description"]
+
     # Temp post context
     temp_post_context = Context(context)
     temp_post_context.update(context_post)
@@ -97,7 +103,7 @@ def parse_page(site, page):
     context_post["body"] = _get_node(
         get_template(page.path),
         context=temp_post_context,
-        name=Global["config"]["post_body_block"]
+        name=Global["config"]["post_body_block"],
     )
 
     return context_post
@@ -105,12 +111,13 @@ def parse_page(site, page):
 
 def preBuildPage(site, page, context, data):
 
-    context['posts'] = Global["posts"]
-    context['projects'] = Global["projects"]
-    page_escaped = page.path.replace('.html', '').strip('/')
+    context["posts"] = Global["posts"]
+    context["projects"] = Global["projects"]
+    context["everything"] = Global["everything"]
+    page_escaped = page.path.replace(".html", "").strip("/")
 
     for post in Global["posts"] + Global["projects"]:
-        post_path_escaped = post['path'].strip('/')
+        post_path_escaped = post["path"].strip("/")
         if post_path_escaped == page_escaped:
             context.update(post)
 
@@ -119,16 +126,19 @@ def preBuildPage(site, page, context, data):
 
 # Utilities for the functions above
 
+
 def parse_date(date_string, path):
     # Convert a string to a date object
     try:
         return datetime.datetime.strptime(date_string, Global["config"]["date_format"])
     except Exception as e:
-        msg = "Date format not correct for page {}, should be {}\n{}".format(path, Global["config"]["date_format"], e)
+        msg = "Date format not correct for page {}, should be {}\n{}".format(
+            path, Global["config"]["date_format"], e
+        )
         logging.warning(msg)
 
 
-def _get_node(template, context=Context(), name='subject'):
+def _get_node(template, context=Context(), name="subject"):
     # Get the contents of a block in a specific template
     for node in template:
         if isinstance(node, BlockNode) and node.name == name:
@@ -146,13 +156,13 @@ def lightbox(content):
     # Convert markdown image on each newline into gallery
     lines = [line for line in content.splitlines() if line]
 
-    html = ''
+    html = ""
 
     for line in lines:
         try:
-            title, url = re.match('!\[(.*)\]\((.+)\)', line).groups()
+            title, url = re.match("!\[(.*)\]\((.+)\)", line).groups()
             html += image_template.format(title=title, url=url)
         except Exception as e:
             print(line, e)
 
-    return '<div class="gallery">' + html + '</div>'
+    return '<div class="gallery">' + html + "</div>"

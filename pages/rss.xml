@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+    <title>Alex Louden</title>
+    <link>https://alexlouden.com/</link>
+    <description></description>
+    <language>en</language>
+    {% for post in everything %}
+    <item>
+      <title>{{ post.title }}</title>
+      <link>https://alexlouden.com{{ post.path }}</link>
+      <description>{{ post.description }}</description>
+      <pubDate>{{ post.date|date:"c" }}</pubDate>
+      <image>{{ post.image }}</image>
+    </item>
+    {% endfor %}
+  </channel>
+</rss>
