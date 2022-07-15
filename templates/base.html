@@ -23,8 +23,8 @@
 	<meta name="twitter:image" content="{{ image }}" />
 
 	{# Preload h1 font #}
-	<link rel="preload" href="{% static "fonts/quicksand.woff2" %}" as="font">
-	<link rel="preload" href="{% static "fonts/playfair-display.woff2" %}" as="font">
+	<link rel="preload" href="{% static "fonts/quicksand.woff2" %}" as="font" crossOrigin="anonymous" />
+	<link rel="preload" href="{% static "fonts/playfair-display.woff2" %}" as="font" crossOrigin="anonymous" />
 </head>
 <body class="{% block body_class %}home{% endblock body_class %}">
 

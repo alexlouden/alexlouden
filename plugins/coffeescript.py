@@ -10,14 +10,14 @@ def run(command):
 
     logger.debug(command)
 
-    os.environ['PATH'] = '/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/share/npm/bin:'
+    # os.environ['PATH'] = '/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/share/npm/bin:/Users/alex/.nvm/versions/node/v11.15.0/bin/'
 
     process = subprocess.Popen(
         [command],
         shell=True,
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
+        stderr=subprocess.PIPE,
     )
 
     stdout = process.stdout.readline()
@@ -30,5 +30,8 @@ def run(command):
 
 
 def preBuild(site):
-    run('coffee -c %s/js/*.coffee' % pipes.quote(site.static_path))
-    run('find %s -name "*.sass" -not -name "_*" -exec scss -C --update {} \;' % pipes.quote(site.static_path))
+    run("yarn coffee -c %s/js/*.coffee" % pipes.quote(site.static_path))
+    run(
+        'find %s -name "*.sass" -not -name "_*" -exec yarn node-sass {} --output . \;'
+        % pipes.quote(site.static_path)
+    )

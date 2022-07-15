@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "coffeescript": "^1.12.7",
+    "google-closure-compiler-js": "^20200719.0.0",
+    "node-sass": "^7.0.1",
+    "yuicompressor": "^2.4.8"
+  }
+}
