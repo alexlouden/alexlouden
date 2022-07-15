@@ -1,0 +1,84 @@
+title: Set up a Raspberry Pi for headless SSH
+date: 20-10-2019
+description: Setting up a Rasberry Pi 4 for SSH with no monitor/keyboard from the mac commandline
+
+{% extends "post.html" %}
+{% block body %}
+
+{% filter markdown %}
+
+Firstly, we need to [download the latest Raspbian](https://downloads.raspberrypi.org/raspbian_lite_latest) (~430MB).
+Extract the zip file and grab the image file - it should be called something like `2019-06-20-raspbian-buster-lite.img`.
+
+Next, plug the microSD card into your computer and find out which disk number it is. For me it's usually `disk2`.
+
+```bash
+diskutil list
+```
+
+<pre style="white-space:pre"><code>/dev/disk0 (internal, physical):
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:      GUID_partition_scheme                        *251.0 GB   disk0
+   1:                        EFI EFI                     209.7 MB   disk0s1
+   2:                 Apple_APFS Container disk1         250.8 GB   disk0s2
+
+/dev/disk1 (synthesized):
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:      APFS Container Scheme -                      +250.8 GB   disk1
+                                 Physical Store disk0s2
+   1:                APFS Volume Macintosh HD            225.0 GB   disk1s1
+   2:                APFS Volume Preboot                 49.4 MB    disk1s2
+   3:                APFS Volume Recovery                509.9 MB   disk1s3
+   4:                APFS Volume VM                      14.0 GB    disk1s4
+
+/dev/disk2 (internal, physical):                                                  <-----
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:     FDisk_partition_scheme                        *15.9 GB    disk2
+   1:             Windows_FAT_32 NO NAME                 15.9 GB    disk2s1
+</code></pre>
+
+The microSD card has come formatted and has automatically mounted, so we need to unmount it to allow overwriting it:
+
+```bash
+diskutil unmountdisk /dev/disk2
+```
+
+We can then copy the Raspbian disk image onto the microSD card using `dd`. This will take a few minutes.
+
+```bash
+sudo dd bs=1m if=2019-06-20-raspbian-buster-lite.img of=/dev/rdisk2 conv=sync
+```
+
+Once it's written it'll again mount a volume called `boot`. We can enable SSH on boot by writing a file called `ssh` in this volume:
+
+```bash
+touch /Volumes/boot/ssh
+```
+
+To enable network access over the USB cable from our mac to the Pi we can enable the modules `dwc2` and `g_ether`. (You'll need to manually edit these files - here I'm using `vi`)
+
+```bash
+# Add "dtoverlay=dwc2" on new line at end of file
+vi /Volumes/boot/config.txt
+
+# Add "modules-load=dwc2,g_ether" to end of line (after "rootwait")
+vi /Volumes/boot/cmdline.txt
+```
+
+Finally, eject it and insert it into the Pi.
+
+```bash
+diskutil eject /dev/disk2
+# Disk /dev/disk2 ejected
+```
+
+From here we can connect a USB cable to it from our mac, and SSH into it locally (using the default password `raspberry`):
+
+```bash
+ssh pi@raspberrypi.local
+# ...
+# pi@raspberrypi:~ $
+```
+
+{% endfilter %}
+{% endblock body %}
