@@ -6,3 +6,8 @@ style.css
 .deploy
 *.pyc
 examples.css
+node_modules
+backup
+.vscode/
+.ipynb_checkpoints/
+google*.html
