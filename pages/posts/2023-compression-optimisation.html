@@ -184,7 +184,7 @@ df['ratio'] = df['size'] / df['sizeCompressed']
 | 208 | 10077825 | 4500981 | 577 | gzip | 8 | 2.239029|
 | 209 | 10077825 | 4501332 | 852 | gzip | 9 | 2.238854|
 
-This looks correct - we can see that as we increase the compression quality (0, 1, 2, ...) the compression ratio is also increasing (1.9, 2.05, 2.2, ...).
+This looks correct - we can see that as we increase the compression quality (0, 1, 2, ...) the compression ratio also increases (1.9, 2.05, 2.2, ...).
 
 Let's visualise this. Seaborn is great for plots like this where there are more than two variables.
 
@@ -219,7 +219,7 @@ plt.title('Compression time vs quality setting')
 
 ![](/static/images/compression/time_v_quality1.png)
 
-Woah - the highest quality settings are really slow - let's try removing those, and see what the graph looks like. We can also use a `stripplot` with a low alpha to better show the distribution of the 10 samples:
+Woah - the highest quality settings are really slow - let's try removing those, and see what the graph looks like. We can use a `stripplot` with low alpha to better show the distribution of the 10 samples:
 
 ```python
 sns.stripplot(
@@ -250,9 +250,9 @@ _ = plt.gca().legend(handles[:2], labels[:2])
 
 ![](/static/images/compression/time_v_quality2.png)
 
-Excellent, this is what we expected - as the quality setting increases, so does the compression duration. Brotli is slower than gzip, however we know from our compression ratio graph that it also compresses further.
+Excellent, this is what we expected - as the quality setting increases, so does the compression duration. Brotli is slower than gzip, however we know from our compression ratio graph that it also compresses a lot more.
 
-Now we can add in the cost function, so we can work out the optimial algorithm and quality setting:
+Now we can add in the cost function, so we can work out the optimal algorithm and quality setting:
 
 ```python
 # from per 100ms to per ms
@@ -297,7 +297,7 @@ _ = plt.gca().legend(handles[:2], labels[:2])
 
 ![](/static/images/compression/cost_v_quality.png)
 
-From this we can determine that `brotli` with a quality setting of `6` will result in the best balance between compression and runtime!
+From this we can determine that `brotli` with a quality setting of `6` will result in the optimal balance between compression and runtime, and therefore the lowest cost!
 
 
 {% endfilter %}
