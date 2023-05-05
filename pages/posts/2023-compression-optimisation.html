@@ -7,7 +7,7 @@ description: Calculating the optimal compression algorithm and parameter selecti
 
 {% filter markdown %}
 
-We're archiving data off to GCP cloud storage, and running the process as a GCP cloud function.
+We're using a GCP cloud function to compress and send data to GCP cloud storage, as part of an archival process.
 
 The challenge is: how do we compress the data in order to minimise cost? What algorithm do we use? What quality setting should we choose? Should we even compress it at all?
 
